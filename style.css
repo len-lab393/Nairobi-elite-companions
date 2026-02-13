@@ -1,1 +1,16 @@
+body{
+font-family: Arial;
+background:black;
+color:white;
+text-align:center;
+}
 
+a{
+color:gold;
+margin:10px;
+text-decoration:none;
+}
+
+h1{
+color:gold;
+}
