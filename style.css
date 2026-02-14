@@ -32,3 +32,28 @@ width:220px;
 width:100%;
 border-radius:10px;
 }
+.slider{
+position:relative;
+width:400px;
+margin:auto;
+}
+
+.slide{
+width:100%;
+display:none;
+border-radius:10px;
+}
+
+.prev, .next{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:black;
+color:white;
+border:none;
+padding:10px;
+cursor:pointer;
+}
+
+.prev{ left:0; }
+.next{ right:0; }
