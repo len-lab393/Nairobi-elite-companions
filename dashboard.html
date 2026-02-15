@@ -16,11 +16,34 @@ window.location.href="login.html";
 <body>
 <h2>Choose Your Plan</h2>
 
+<h2>Choose Your Plan</h2>
+
 <div class="plans">
-  <button>Basic Plan - $10</button>
-  <button>Premium Plan - $30</button>
-  <button>VIP Plan - $100</button>
+  <button onclick="selectPlan('2 Days Plan', 100)">
+    2 Days Plan - KSh 100
+  </button>
+
+  <button onclick="selectPlan('Weekly Plan', 400)">
+    Weekly Plan - KSh 400
+  </button>
+
+  <button onclick="selectPlan('Monthly Plan', 1200)">
+    Monthly Plan - KSh 1200
+  </button>
 </div>
+
+<script>
+function selectPlan(planName, price) {
+  localStorage.setItem("selectedPlan", planName);
+  localStorage.setItem("planPrice", price);
+
+  alert("You selected " + planName + " - KSh " + price);
+
+  // redirect to booking or payment page
+  window.location.href = "booking.html";
+}
+</script>
+
 
 <h3>Membership Status</h3>
 <p id="status"></p>
