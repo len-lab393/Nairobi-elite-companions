@@ -29,3 +29,41 @@
 
 </body>
 </html>
+<h1>Nairobi Membership Plans</h1>
+
+<div>
+<h2>Trial Access</h2>
+<p>KSh 100 — 2 Days</p>
+<button onclick="subscribe(2)">Subscribe</button>
+</div>
+
+<div>
+<h2>Weekly VIP</h2>
+<p>KSh 400 — 7 Days</p>
+<button onclick="subscribe(7)">Subscribe</button>
+</div>
+
+<div>
+<h2>Monthly Elite</h2>
+<p>KSh 1200 — 30 Days</p>
+<button onclick="subscribe(30)">Subscribe</button>
+</div>
+
+<script>
+function subscribe(days){
+
+// must be logged in
+if(!localStorage.getItem("userEmail")){
+alert("Login first");
+window.location.href="login.html";
+return;
+}
+
+// set expiry based on plan
+let expiry = Date.now() + (days*24*60*60*1000);
+localStorage.setItem("membershipExpiry", expiry);
+
+alert("Subscription activated!");
+window.location.href="dashboard.html";
+}
+</script>
