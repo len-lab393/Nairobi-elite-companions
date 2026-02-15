@@ -1,133 +1,146 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Member Dashboard</title>
-<link rel="stylesheet" href="style.css">
+<title>Dashboard</title>
+
+<style>
+
+body{
+  font-family: Arial;
+  background:#111;
+  color:white;
+  padding:40px;
+}
+
+.container{
+  max-width:700px;
+  margin:auto;
+}
+
+.card{
+  background:#1f1f1f;
+  padding:25px;
+  border-radius:10px;
+  margin-top:20px;
+}
+
+button{
+  padding:10px 20px;
+  margin-top:15px;
+  cursor:pointer;
+}
+
+.active{
+  color:lime;
+}
+
+.expired{
+  color:red;
+}
+
+</style>
+
+<!-- AUTO AUTH GUARD -->
 <script>
+
+// must be logged in
+if(localStorage.getItem("loggedIn") !== "true"){
+  alert("Login required");
+  window.location.href="login.html";
+}
+
+// must have subscription
 let sub = JSON.parse(localStorage.getItem("subscription"));
 
 if(!sub){
   alert("No active subscription");
-  window.location.href = "pricing.html";
-}
-let sub = JSON.parse(localStorage.getItem("subscription"));
-
-if(sub){
-  let today = new Date();
-  let expiry = new Date(sub.expiry);
-
-  let daysLeft = Math.ceil((expiry - today)/(1000*60*60*24));
-
-  if(daysLeft <= 2){
-    alert("Your plan expires in " + daysLeft + " days");
-  }
+  window.location.href="pricing.html";
 }
 
+// check expiry
 let today = new Date();
 let expiry = new Date(sub.expiry);
 
 if(today > expiry){
-  alert("Your subscription has expired");
-
-  localStorage.removeItem("subscription"); // auto unsubscribe
-  window.location.href = "pricing.html";
+  alert("Subscription expired");
+  localStorage.removeItem("subscription");
+  window.location.href="pricing.html";
 }
-</script>
 
-<script>
-// block access if not logged in
-if(!localStorage.getItem("userEmail")){
-window.location.href="login.html";
-}
 </script>
 
 </head>
 
 <body>
-<h3>Your Subscription</h3>
-<div id="subscriptionInfo"></div>
 
-<script>
-let sub = JSON.parse(localStorage.getItem("subscription"));
+<div class="container">
 
-if(sub){
-  document.getElementById("subscriptionInfo").innerHTML =
-  `
-  User: ${sub.user}<br>
-  Plan: ${sub.plan}<br>
-  Start: ${sub.start}<br>
-  Expiry: ${sub.expiry}
-  `;
-}else{
-  document.getElementById("subscriptionInfo").innerHTML = "No active plan";
-}
-</script>
+<h1>Member Dashboard</h1>
 
-  
-<h2>Choose Your Plan</h2>
-
-<h2>Choose Your Plan</h2>
-
-<div class="plans">
-  <button onclick="selectPlan('2 Days Plan', 100)">
-    2 Days Plan - KSh 100
-  </button>
-
-  <button onclick="selectPlan('Weekly Plan', 400)">
-    Weekly Plan - KSh 400
-  </button>
-
-  <button onclick="selectPlan('Monthly Plan', 1200)">
-    Monthly Plan - KSh 1200
-  </button>
+<div class="card">
+<h3>User Info</h3>
+<div id="userInfo"></div>
 </div>
 
-<script>
-function selectPlan(planName, price) {
-  localStorage.setItem("selectedPlan", planName);
-  localStorage.setItem("planPrice", price);
+<div class="card">
+<h3>Subscription Details</h3>
+<div id="subscriptionInfo"></div>
+</div>
 
-  alert("You selected " + planName + " - KSh " + price);
+<div class="card">
+<h3>Member Access</h3>
 
-  // redirect to booking or payment page
-  window.location.href = "booking.html";
-}
-</script>
+<a href="gallery.html">
+<button>View Gallery</button>
+</a>
 
+<a href="booking.html">
+<button>Book Service</button>
+</a>
 
-<h3>Membership Status</h3>
-<p id="status"></p>
-
-<div id="renewBox"></div>
-
-
-<br>
-
-<a href="profiles.html">View VIP Profiles</a>
-<br><br>
+<a href="admin.html">
+<button>Admin Panel</button>
+</a>
 
 <button onclick="logout()">Logout</button>
 
-<script>
-  let expiry = localStorage.getItem("membershipExpiry");
+</div>
 
-if(Date.now() > expiry){
-document.getElementById("status").innerText = "Expired ❌";
-}
-else{
-document.getElementById("status").innerText = "Active ✅";
-}
+</div>
+
+<script>
 
 // show username
-let username = localStorage.getItem("username");
-document.getElementById("welcome").innerText = username;
+let user = localStorage.getItem("username");
+document.getElementById("userInfo").innerHTML = "Username: " + user;
 
-// logout function
+
+// show subscription
+let subscription = JSON.parse(localStorage.getItem("subscription"));
+
+let today2 = new Date();
+let expiry2 = new Date(subscription.expiry);
+
+let status = today2 > expiry2
+? "<span class='expired'>EXPIRED</span>"
+: "<span class='active'>ACTIVE</span>";
+
+document.getElementById("subscriptionInfo").innerHTML =
+`
+Plan: ${subscription.plan}<br>
+Price: KSh ${subscription.price}<br>
+Start: ${subscription.start}<br>
+Expiry: ${subscription.expiry}<br>
+Status: ${status}
+`;
+
+
+// logout
 function logout(){
-localStorage.clear();
-window.location.href="login.html";
-  <br>
-<a href="booking.html">Make Booking</a>
+  localStorage.removeItem("loggedIn");
+  localStorage.removeItem("username");
+  window.location.href="login.html";
+}
 
 </script>
 
