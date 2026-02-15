@@ -23,8 +23,19 @@
 <br>
 <a href="register.html">Create account</a>
 
-
 <script>
+  let sub = JSON.parse(localStorage.getItem("subscription"));
+
+if(sub){
+  let today = new Date();
+  let expiry = new Date(sub.expiry);
+
+  if(today > expiry){
+    alert("Subscription expired. Renew first.");
+    return;
+  }
+}
+
 function loginUser(event){
 event.preventDefault();
 
@@ -45,6 +56,5 @@ alert("Invalid login details");
 }
 }
 </script>
-
 </body>
 </html>
