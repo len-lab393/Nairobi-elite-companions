@@ -60,3 +60,22 @@ cursor:pointer;
 .plans {
   display: block;
 }
+.plans {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.plans button {
+  padding: 15px;
+  font-size: 18px;
+  background: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.plans button:hover {
+  background: #333;
+}
