@@ -43,6 +43,10 @@ alert("Account created successfully!");
 
 window.location.href = "login.html";
 }
+  // membership expires in 7 days
+let expiry = Date.now() + (7*24*60*60*1000);
+localStorage.setItem("membershipExpiry", expiry);
+
 </script>
 
 </body>
