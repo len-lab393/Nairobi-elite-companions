@@ -4,6 +4,14 @@
 <title>Companion Profiles</title>
 <link rel="stylesheet" href="style.css">
 </head>
+<script>
+let expiry = localStorage.getItem("membershipExpiry");
+
+if(Date.now() > expiry){
+alert("Membership expired. Please renew.");
+window.location.href="pricing.html";
+}
+</script>
 
 <body>
 
