@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Member Dashboard</title>
+<link rel="stylesheet" href="style.css">
+
+<script>
+// block access if not logged in
+if(!localStorage.getItem("userEmail")){
+window.location.href="login.html";
+}
+</script>
+
+</head>
+
+<body>
+
+<h1>Member Dashboard</h1>
+
+<h2>Welcome</h2>
+<p id="welcome"></p>
+
+<h3>Membership Status</h3>
+<p>Active Member</p>
+
+<br>
+
+<a href="profiles.html">View VIP Profiles</a>
+
+<br><br>
+
+<button onclick="logout()">Logout</button>
+
+<script>
+// show username
+let username = localStorage.getItem("username");
+document.getElementById("welcome").innerText = username;
+
+// logout function
+function logout(){
+localStorage.clear();
+window.location.href="login.html";
+}
+</script>
+
+</body>
+</html>
