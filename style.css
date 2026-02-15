@@ -57,3 +57,6 @@ cursor:pointer;
 
 .prev{ left:0; }
 .next{ right:0; }
+.plans {
+  display: block;
+}
