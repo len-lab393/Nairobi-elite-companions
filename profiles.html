@@ -5,6 +5,26 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <script>
+let sub = JSON.parse(localStorage.getItem("subscription"));
+
+if(!sub){
+  alert("No active subscription");
+  window.location.href = "pricing.html";
+}
+
+let today = new Date();
+let expiry = new Date(sub.expiry);
+
+if(today > expiry){
+  alert("Your subscription has expired");
+
+  localStorage.removeItem("subscription"); // auto unsubscribe
+  window.location.href = "pricing.html";
+}
+</script>
+
+  
+<script>
 if(!localStorage.getItem("membershipExpiry") ||
 Date.now() > localStorage.getItem("membershipExpiry")){
 alert("Membership required");
