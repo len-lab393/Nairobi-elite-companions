@@ -2,6 +2,14 @@
 <h3>Subscription Records</h3>
 
 <div id="adminData"></div>
+<script>
+let adminPassword = prompt("Enter Admin Password");
+
+if(adminPassword !== "admin123"){
+  alert("Access denied");
+  window.location.href = "index.html";
+}
+</script>
 
 <script>
 let sub = JSON.parse(localStorage.getItem("subscription"));
