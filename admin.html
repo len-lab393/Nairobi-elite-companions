@@ -1,0 +1,29 @@
+<h1>Admin Panel</h1>
+<h3>Subscription Records</h3>
+
+<div id="adminData"></div>
+
+<script>
+let sub = JSON.parse(localStorage.getItem("subscription"));
+
+if(sub){
+
+  let today = new Date();
+  let expiryDate = new Date(sub.expiry);
+
+  let status = today > expiryDate ? "EXPIRED" : "ACTIVE";
+
+  document.getElementById("adminData").innerHTML =
+  `
+  User: ${sub.user}<br>
+  Plan: ${sub.plan}<br>
+  Price: KSh ${sub.price}<br>
+  Start: ${sub.start}<br>
+  Expiry: ${sub.expiry}<br>
+  Status: <b>${status}</b>
+  `;
+
+}else{
+  document.getElementById("adminData").innerHTML = "No subscriptions yet";
+}
+</script>
