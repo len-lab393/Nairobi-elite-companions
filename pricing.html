@@ -50,20 +50,32 @@
 </div>
 
 <script>
-function subscribe(days){
+function selectPlan(planName, price) {
 
-// must be logged in
-if(!localStorage.getItem("userEmail")){
-alert("Login first");
-window.location.href="login.html";
-return;
-}
+  let days = 0;
 
-// set expiry based on plan
-let expiry = Date.now() + (days*24*60*60*1000);
-localStorage.setItem("membershipExpiry", expiry);
+  if(planName === "2 Days Plan") days = 2;
+  if(planName === "Weekly Plan") days = 7;
+  if(planName === "Monthly Plan") days = 30;
 
-alert("Subscription activated!");
-window.location.href="dashboard.html";
+  let today = new Date();
+  let expiry = new Date();
+  expiry.setDate(today.getDate() + days);
+
+  let user = localStorage.getItem("username") || "Guest";
+
+  let subscription = {
+    user: user,
+    plan: planName,
+    price: price,
+    start: today.toDateString(),
+    expiry: expiry.toDateString()
+  };
+
+  localStorage.setItem("subscription", JSON.stringify(subscription));
+
+  alert("Plan Activated!");
+  window.location.href = "dashboard.html";
 }
 </script>
+
