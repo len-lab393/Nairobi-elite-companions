@@ -19,9 +19,8 @@ window.location.href="login.html";
 
 <h2>Welcome</h2>
 <p id="welcome"></p>
-
 <h3>Membership Status</h3>
-<p>Active Member</p>
+<p id="status"></p>
 
 <br>
 
@@ -32,6 +31,15 @@ window.location.href="login.html";
 <button onclick="logout()">Logout</button>
 
 <script>
+  let expiry = localStorage.getItem("membershipExpiry");
+
+if(Date.now() > expiry){
+document.getElementById("status").innerText = "Expired ❌";
+}
+else{
+document.getElementById("status").innerText = "Active ✅";
+}
+
 // show username
 let username = localStorage.getItem("username");
 document.getElementById("welcome").innerText = username;
