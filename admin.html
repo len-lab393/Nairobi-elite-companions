@@ -1,37 +1,114 @@
-<h1>Admin Panel</h1>
-<h3>Subscription Records</h3>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
 
-<div id="adminData"></div>
-<script>
-let adminPassword = prompt("Enter Admin Password");
+<style>
 
-if(adminPassword !== "admin123"){
-  alert("Access denied");
-  window.location.href = "index.html";
+body{
+  font-family: Arial;
+  background:#111;
+  color:white;
+  padding:40px;
 }
-</script>
+
+.container{
+  max-width:700px;
+  margin:auto;
+}
+
+.card{
+  background:#1f1f1f;
+  padding:25px;
+  border-radius:10px;
+  margin-top:20px;
+}
+
+.active{
+  color:lime;
+}
+
+.expired{
+  color:red;
+}
+
+button{
+  padding:10px 20px;
+  margin-top:15px;
+  cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Admin Control Panel</h1>
+
+<div class="card" id="adminData"></div>
+
+<button onclick="clearSub()">Remove Subscription</button>
+<button onclick="logout()">Logout</button>
+
+</div>
 
 <script>
+
+// ADMIN PASSWORD
+let pass = prompt("Enter Admin Password");
+
+if(pass !== "admin123"){
+  alert("Access denied");
+  window.location.href="login.html";
+}
+
+
+// GET SUBSCRIPTION
 let sub = JSON.parse(localStorage.getItem("subscription"));
 
 if(sub){
 
   let today = new Date();
-  let expiryDate = new Date(sub.expiry);
+  let expiry = new Date(sub.expiry);
 
-  let status = today > expiryDate ? "EXPIRED" : "ACTIVE";
+  let status = today > expiry
+  ? "<span class='expired'>EXPIRED</span>"
+  : "<span class='active'>ACTIVE</span>";
 
-  document.getElementById("adminData").innerHTML =
-  `
-  User: ${sub.user}<br>
-  Plan: ${sub.plan}<br>
-  Price: KSh ${sub.price}<br>
-  Start: ${sub.start}<br>
-  Expiry: ${sub.expiry}<br>
-  Status: <b>${status}</b>
+  document.getElementById("adminData").innerHTML = `
+    <h3>User Details</h3>
+    Username: ${sub.user}<br>
+    Plan: ${sub.plan}<br>
+    Price: KSh ${sub.price}<br>
+    Start: ${sub.start}<br>
+    Expiry: ${sub.expiry}<br>
+    Status: ${status}
   `;
 
 }else{
-  document.getElementById("adminData").innerHTML = "No subscriptions yet";
+  document.getElementById("adminData").innerHTML =
+  "No active subscriptions found";
 }
+
+
+// REMOVE SUBSCRIPTION
+function clearSub(){
+  localStorage.removeItem("subscription");
+  alert("Subscription removed");
+  location.reload();
+}
+
+
+// LOGOUT
+function logout(){
+  localStorage.removeItem("loggedIn");
+  window.location.href="login.html";
+}
+
 </script>
+
+</body>
+</html>
