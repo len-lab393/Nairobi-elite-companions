@@ -5,14 +5,12 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <script>
-let expiry = localStorage.getItem("membershipExpiry");
-
-if(Date.now() > expiry){
-alert("Membership expired. Please renew.");
+if(!localStorage.getItem("membershipExpiry") ||
+Date.now() > localStorage.getItem("membershipExpiry")){
+alert("Membership required");
 window.location.href="pricing.html";
 }
 </script>
-
 <body>
 
 <h1>Available Companions</h1>
