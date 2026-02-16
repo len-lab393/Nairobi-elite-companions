@@ -1,0 +1,26 @@
+<h1>Complete Payment</h1>
+
+<select id="plan">
+<option value="100">2 Days — KSh 100</option>
+<option value="400">Weekly — KSh 400</option>
+<option value="1200">Monthly — KSh 1200</option>
+</select>
+
+<button onclick="pay()">Pay Now</button>
+
+<script>
+
+function pay(){
+
+  let price = document.getElementById("plan").value;
+
+  alert("Processing payment of KSh " + price);
+
+  setTimeout(()=>{
+    alert("Payment successful");
+    window.location.href="dashboard.html";
+  },2000);
+
+}
+
+</script>
