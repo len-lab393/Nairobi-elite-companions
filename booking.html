@@ -8,65 +8,23 @@ I confirm I am 18+ and agree to the Legal Disclaimer
 <title>Book Companion</title>
 <link rel="stylesheet" href="style.css">
 
-<script>
-// block if not logged in
-if(!localStorage.getItem("userEmail")){
-window.location.href="login.html";
+<script type="module">
+
+import { auth, db } from "./firebase.js";
+import { collection, addDoc }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+window.book = async function(profile){
+
+  let user = auth.currentUser;
+
+  await addDoc(collection(db,"bookings"),{
+    user: user.email,
+    profile: profile,
+    date: new Date().toISOString()
+  });
+
+  alert("Booking confirmed");
 }
+
 </script>
-
-</head>
-
-
-<body>
-
-<h1>Booking Request</h1>
-
-<form onsubmit="bookService(event)">
-
-<label>Select Companion:</label><br>
-<select id="model">
-<option>Sophia</option>
-<option>Maya</option>
-<option>Lina</option>
-</select>
-
-<br><br>
-
-<label>Date:</label><br>
-<input type="date" id="date" required>
-
-<br><br>
-
-<label>Location:</label><br>
-<input type="text" id="location" placeholder="Meeting location" required>
-
-<br><br>
-
-<button type="submit">Submit Booking</button>
-
-</form>
-
-<br>
-<a href="dashboard.html">Back to Dashboard</a>
-
-
-<script>
-function bookService(event){
-event.preventDefault();
-
-let model = document.getElementById("model").value;
-let date = document.getElementById("date").value;
-let location = document.getElementById("location").value;
-
-let booking = model + " on " + date + " at " + location;
-
-localStorage.setItem("booking", booking);
-
-window.location.href="booking-success.html";
-}
-</script>
-
-
-</body>
-</html>
