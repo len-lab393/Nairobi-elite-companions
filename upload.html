@@ -1,0 +1,32 @@
+<input type="file" id="file">
+<button onclick="upload()">Upload Image</button>
+
+<script type="module">
+
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import { getStorage, ref, uploadBytes, getDownloadURL }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
+const firebaseConfig = {
+  // paste your config
+};
+
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
+
+window.upload = async function(){
+
+  let file = document.getElementById("file").files[0];
+
+  let storageRef = ref(storage,"profiles/"+file.name);
+
+  await uploadBytes(storageRef,file);
+
+  let url = await getDownloadURL(storageRef);
+
+  alert("Image uploaded: " + url);
+}
+
+</script>
