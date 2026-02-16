@@ -66,6 +66,20 @@ if(!sub){
 // check expiry
 let today = new Date();
 let expiry = new Date(sub.expiry);
+let sub = JSON.parse(localStorage.getItem("subscription"));
+
+if(!sub){
+  window.location.href="pricing.html";
+}
+
+let today = new Date();
+let expiry = new Date(sub.expiry);
+
+if(today > expiry){
+  localStorage.removeItem("subscription");
+  alert("Subscription expired. Renew.");
+  window.location.href="pricing.html";
+}
 
 if(today > expiry){
   alert("Subscription expired");
