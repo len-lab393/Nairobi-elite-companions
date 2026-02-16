@@ -36,7 +36,9 @@ button{
 
 <script>
 
-function login(){
+function login(event){
+
+  if(event) event.preventDefault();
 
   let username = document.getElementById("username").value;
   let password = document.getElementById("password").value;
@@ -46,24 +48,17 @@ function login(){
     return;
   }
 
-  // save login session
+  // save session permanently
   localStorage.setItem("loggedIn","true");
   localStorage.setItem("username",username);
 
-  // check subscription
-  let sub = JSON.parse(localStorage.getItem("subscription"));
+  // save fake account list
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  users.push({username: username});
+  localStorage.setItem("users", JSON.stringify(users));
 
-  if(sub){
-    let today = new Date();
-    let expiry = new Date(sub.expiry);
-
-    if(today > expiry){
-      alert("Subscription expired. Renew first.");
-      localStorage.removeItem("subscription");
-      window.location.href="pricing.html";
-      return;
-    }
-  }
+  window.location.href="dashboard.html";
+}
 
   alert("Login successful");
   window.location.href="dashboard.html";
