@@ -1,57 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Lina Profile</title>
-<link rel="stylesheet" href="style.css">
+<title>lina Profile</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+  font-family:Arial;
+  margin:0;
+  background:#111;
+  color:white;
+}
+
+/* layout */
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+/* profile card */
+.card{
+  background:#1f1f1f;
+  border-radius:12px;
+  padding:20px;
+  margin-top:20px;
+}
+
+/* image slider */
+.slider img{
+  width:100%;
+  border-radius:10px;
+}
+
+/* button */
+button{
+  padding:14px;
+  width:100%;
+  margin-top:15px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:gold;
+}
+
+</style>
 </head>
-<script>
-let current = 0;
-let slides = document.getElementsByClassName("slide");
-
-function showSlide(index){
-for(let i=0;i<slides.length;i++){
-slides[i].style.display="none";
-}
-
-current += index;
-
-if(current >= slides.length){current=0;}
-if(current < 0){current=slides.length-1;}
-
-slides[current].style.display="block";
-}
-
-function changeSlide(n){
-showSlide(n);
-}
-
-showSlide(0);
-</script>
 
 <body>
 
-<h1>Lina</h1>
+<div class="container">
+
+<h1>lina</h1>
+
+<div class="card">
 
 <div class="slider">
+<img id="profileImage" src="images/lina.jpg">
+</div>
 
-<img class="slide" src="https://picsum.photos/400/400?random=11">
-<img class="slide" src="https://picsum.photos/400/400?random=12">
-<img class="slide" src="https://picsum.photos/400/400?random=13">
+<h3>Details</h3>
 
-<button class="prev" onclick="changeSlide(-1)">❮</button>
-<button class="next" onclick="changeSlide(1)">❯</button>
+Age: 23<br>
+Location: Nairobi<br>
+Availability: Available Today<br>
+
+<h3>Services</h3>
+• Private meeting<br>
+• VIP experience<br>
+• Overnight booking<br>
+
+<h3>Rates</h3>
+2 Days — KSh 100<br>
+Weekly — KSh 400<br>
+Monthly — KSh 1200<br>
+
+<button onclick="book()">Book Now</button>
 
 </div>
 
-<p><strong>Age:</strong> 23</p>
-<p><strong>Location:</strong> Nairobi</p>
-<p><strong>About:</strong> Energetic and charming companion, perfect for private dinners and social outings.</p>
+</div>
 
-<br>
-
-<a href="booking.html">Book Now</a>
-<br><br>
-<a href="profiles.html">Back to Profiles</a>
+<script>
+function book(){
+  window.location.href="booking.html";
+}
+</script>
 
 </body>
 </html>
