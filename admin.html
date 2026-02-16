@@ -54,77 +54,22 @@ button{
 <button onclick="logout()">Logout</button>
 
 </div>
+<script type="module">
 
-<script>
+import { db } from "./firebase.js";
+import { collection, getDocs }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// ADMIN PASSWORD
-let pass = prompt("Enter Admin Password");
+let users = await getDocs(collection(db,"users"));
+let bookings = await getDocs(collection(db,"bookings"));
 
-if(pass !== "emperor001"){
-alert("Access denied");
-  window.location.href="login.html";
-}
-let users = JSON.parse(localStorage.getItem("users")) || [];
-
-if(users.length > 0){
-
-  let html = "<h3>Registered Users</h3>";
-
-  users.forEach(u=>{
-    html += "User: " + u.username + "<br>";
-  });
-
-  document.getElementById("adminData").innerHTML = html;
-
-}else{
-  document.getElementById("adminData").innerHTML =
-  "No registered users yet";
-}
-
-
-// GET SUBSCRIPTION
-let sub = JSON.parse(localStorage.getItem("subscription"));
-
-if(sub){
-
-  let today = new Date();
-  let expiry = new Date(sub.expiry);
-
-  let status = today > expiry
-  ? "<span class='expired'>EXPIRED</span>"
-  : "<span class='active'>ACTIVE</span>";
-
-  document.getElementById("adminData").innerHTML = `
-    <h3>User Details</h3>
-    Username: ${sub.user}<br>
-    Plan: ${sub.plan}<br>
-    Price: KSh ${sub.price}<br>
-    Start: ${sub.start}<br>
-    Expiry: ${sub.expiry}<br>
-    Status: ${status}
-  `;
-
-}else{
-  document.getElementById("adminData").innerHTML =
-  "No active subscriptions found";
-}
-
-
-// REMOVE SUBSCRIPTION
-function clearSub(){
-  localStorage.removeItem("subscription");
-  alert("Subscription removed");
-  location.reload();
-}
-
-
-// LOGOUT
-function logout(){
-  localStorage.removeItem("loggedIn");
-  window.location.href="login.html";
-}
+document.getElementById("adminData").innerHTML = `
+Total Users: ${users.size}<br>
+Total Bookings: ${bookings.size}
+`;
 
 </script>
+
 
 </body>
 </html>
