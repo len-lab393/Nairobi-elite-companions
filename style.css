@@ -79,3 +79,19 @@ cursor:pointer;
 .plans button:hover {
   background: #333;
 }
+.container{
+  width:90%;
+  margin:auto;
+}
+
+@media(max-width:600px){
+
+  body{
+    font-size:14px;
+  }
+
+  button{
+    width:100%;
+  }
+
+}
