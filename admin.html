@@ -64,6 +64,22 @@ if(pass !== "admin123"){
   alert("Access denied");
   window.location.href="login.html";
 }
+let users = JSON.parse(localStorage.getItem("users")) || [];
+
+if(users.length > 0){
+
+  let html = "<h3>Registered Users</h3>";
+
+  users.forEach(u=>{
+    html += "User: " + u.username + "<br>";
+  });
+
+  document.getElementById("adminData").innerHTML = html;
+
+}else{
+  document.getElementById("adminData").innerHTML =
+  "No registered users yet";
+}
 
 
 // GET SUBSCRIPTION
