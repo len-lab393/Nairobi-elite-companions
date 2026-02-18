@@ -1,75 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Login</title>
-
-<style>
-body{
-  font-family: Arial;
-  background:#111;
-  color:white;
-  text-align:center;
-  padding-top:100px;
-}
-
-input{
-  padding:12px;
-  margin:10px;
-  width:250px;
-}
-
-button{
-  padding:12px 20px;
-  cursor:pointer;
-}
-</style>
+  <title>Login</title>
 </head>
-<script>
-if(localStorage.getItem("loggedIn") === "true"){
-  window.location.href="dashboard.html";
-}
-</script>
 
 <body>
 
-<h1>Member Login</h1>
+<h2>Member Login</h2>
 
-<input type="text" id="username" placeholder="Username"><br>
-<input type="password" id="password" placeholder="Password"><br>
+<form action="https://backend-production-f9aba.up.railway.app/login" method="POST">
 
-<button type="button" onclick="login()">Login</button>
+  <input
+    type="text"
+    name="username"
+    placeholder="Username"
+    required
+  />
 
-<script>
+  <br><br>
 
-function login(event){
+  <input
+    type="password"
+    name="password"
+    placeholder="Password"
+    required
+  />
 
-  if(event) event.preventDefault();
+  <br><br>
 
-  let username = document.getElementById("username").value;
-  let password = document.getElementById("password").value;
+  <button type="submit">Login</button>
 
-  if(username === "" || password === ""){
-    alert("Enter username and password");
-    return;
-  }
-
-  // save session permanently
-  localStorage.setItem("loggedIn","true");
-  localStorage.setItem("username",username);
-
-  // save fake account list
-  let users = JSON.parse(localStorage.getItem("users")) || [];
-  users.push({username: username});
-  localStorage.setItem("users", JSON.stringify(users));
-
-  window.location.href="dashboard.html";
-}
-
-  alert("Login successful");
-  window.location.href="dashboard.html";
-}
-
-</script>
+</form>
 
 </body>
 </html>
