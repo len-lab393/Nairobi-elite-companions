@@ -19,34 +19,31 @@
 <label>Password</label>
 <input type="password" id="password" required>
 
-<button class="btn">Register</button>
+<button type="submit" class="btn">Register</button>
 </form>
 
 <p>Already a member? <a href="login.html">Login</a></p>
 </div>
 
 <script>
-document.getElementById("registerForm").addEventListener("submit", async e => {
+document.getElementById("registerForm").addEventListener("submit", e=>{
 e.preventDefault()
 
 const email=document.getElementById("email").value
 const password=document.getElementById("password").value
 
-// CHANGE to your backend URL
-const res=await fetch("https://YOUR-BACKEND-URL/register",{
-method:"POST",
-headers:{ "Content-Type":"application/json" },
-body:JSON.stringify({email,password})
-})
+let users=JSON.parse(localStorage.getItem("users")||"[]")
 
-const data=await res.json()
-
-if(data.success){
-alert("Account created. Login now.")
-window.location.href="login.html"
-}else{
-alert(data.msg || "Registration failed")
+if(users.find(u=>u.email===email)){
+alert("Email already exists")
+return
 }
+
+users.push({email,password,plan:"none"})
+localStorage.setItem("users",JSON.stringify(users))
+
+alert("Account created")
+window.location.href="login.html"
 })
 </script>
 
