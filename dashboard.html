@@ -12,6 +12,35 @@
 
 <a href="gallery.html">View Gallery</a>
 <a href="pricing.html">Choose Plan</a>
+<h2>Choose Plan</h2>
+
+<button onclick="buy('2days')">KSh 100 • 2 Days</button>
+<button onclick="buy('week')">KSh 400 • Weekly</button>
+<button onclick="buy('month')">KSh 1200 • Monthly</button>
+
+<p id="msg"></p>
+
+<script>
+const email=localStorage.getItem("user")
+
+if(!email) location.href="login.html"
+
+async function buy(plan){
+const res=await fetch("https://backend-production-f9aba.up.railway.app/buy",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({email,plan})
+})
+
+const data=await res.json()
+
+if(data.success){
+msg.innerText="Plan activated"
+}else{
+msg.innerText="Error"
+}
+}
+</script>
 
 </body>
 </html>
