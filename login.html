@@ -5,36 +5,33 @@
 </head>
 
 <body>
+<h2>Login</h2>
 
-<h2>Member Login</h2>
-
-<input id="username" placeholder="Username">
+<input id="email" placeholder="Email">
 <input id="password" type="password" placeholder="Password">
 
 <button onclick="login()">Login</button>
-
 <p id="msg"></p>
 
 <script>
-async function login() {
-  const username = document.getElementById("username").value
-  const password = document.getElementById("password").value
+async function login(){
+const email=document.getElementById("email").value
+const password=document.getElementById("password").value
 
-  const res = await fetch("https://backend-production-f9aba.up.railway.app/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password })
-  })
+const res=await fetch("https://backend-production-f9aba.up.railway.app/login",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({email,password})
+})
 
-  const text = await res.text()
+const data=await res.json()
 
-  if (text === "success") {
-    window.location.href = "dashboard.html"
-  } else {
-    document.getElementById("msg").innerText = text
-  }
+if(data.success){
+localStorage.setItem("user",email)
+location.href="dashboard.html"
+}else{
+msg.innerText=data.msg
+}
 }
 </script>
 
-</body>
-</html>
