@@ -8,16 +8,33 @@
 
 <h2>Member Login</h2>
 
-<form action="https://backend-production-f9aba.up.railway.app/login" method="POST">
+<input id="username" placeholder="Username">
+<input id="password" type="password" placeholder="Password">
 
-<input type="text" name="username" placeholder="Username" required>
-<input type="password" name="password" placeholder="Password" required>
+<button onclick="login()">Login</button>
 
-<button type="submit">Login</button>
+<p id="msg"></p>
 
-</form>
+<script>
+async function login() {
+  const username = document.getElementById("username").value
+  const password = document.getElementById("password").value
 
-<a href="register.html">Create account</a>
+  const res = await fetch("https://backend-production-f9aba.up.railway.app/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password })
+  })
+
+  const text = await res.text()
+
+  if (text === "success") {
+    window.location.href = "dashboard.html"
+  } else {
+    document.getElementById("msg").innerText = text
+  }
+}
+</script>
 
 </body>
 </html>
