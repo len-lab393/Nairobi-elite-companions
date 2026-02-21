@@ -1,49 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>maya Profile</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>maya | Nairobi Elite</title>
 
 <style>
-
 body{
-  font-family:Arial;
-  margin:0;
-  background:#111;
-  color:white;
+font-family: Arial, sans-serif;
+margin:0;
+background:#f7f7f7;
 }
 
-/* layout */
 .container{
-  max-width:900px;
-  margin:auto;
-  padding:20px;
+max-width:500px;
+margin:auto;
+background:white;
+padding:20px;
 }
 
-/* profile card */
+.profile-img{
+width:100%;
+height:400px;
+object-fit:cover;
+border-radius:12px;
+}
+
+.name{
+font-size:28px;
+font-weight:bold;
+margin-top:15px;
+}
+
+.status{
+color:#ff0077;
+font-weight:bold;
+}
+
 .card{
-  background:#1f1f1f;
-  border-radius:12px;
-  padding:20px;
-  margin-top:20px;
+background:#fafafa;
+padding:15px;
+margin-top:15px;
+border-radius:10px;
 }
 
-/* image slider */
-.slider img{
-  width:100%;
-  border-radius:10px;
+.lock{
+background:#eee;
+padding:15px;
+text-align:center;
+border-radius:10px;
 }
 
-/* button */
-button{
-  padding:14px;
-  width:100%;
-  margin-top:15px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  background:gold;
+.unlock-btn{
+background:#ff0077;
+color:white;
+border:none;
+padding:15px;
+width:100%;
+margin-top:10px;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+}
+
+.unlock-btn:hover{
+background:#e6006b;
+}
+
+.contact{
+display:none;
+background:#d4ffd4;
+padding:15px;
+border-radius:10px;
+margin-top:15px;
+}
+
+ul{
+padding-left:18px;
 }
 
 </style>
@@ -53,41 +86,65 @@ button{
 
 <div class="container">
 
-<h1>Sophia</h1>
+<img src="images/maya.jpg" class="profile-img">
+
+<div class="name">maya, 24</div>
+<div class="status">Available Now • Nairobi</div>
 
 <div class="card">
-
-<div class="slider">
-<img id="profileImage" src="images/maya.jpg">
+<b>Location:</b> Nairobi Town<br>
+<b>Meeting Place:</b> Hotel / Apartment<br>
+<b>Body Type:</b> thick<br>
+<b>Preference:</b> Men<br>
+<b>Rate:</b> KSh 5000
 </div>
 
-<h3>Details</h3>
+<div class="card">
+<b>About Me</b>
+<p>
+Classy, clean and drama-free. I love generous gentlemen and private meetings.
+100% real photos.
+</p>
+</div>
 
-Age: 23<br>
-Location: Nairobi<br>
-Availability: Available Today<br>
+<div class="card">
+<b>Services Offered</b>
+<ul>
+<li>Outcall</li>
+<li>Incall</li>
+<li>Overnight</li>
+</ul>
+</div>
 
-<h3>Services</h3>
-• Private meeting<br>
-• VIP experience<br>
-• Overnight booking<br>
+<div class="lock" id="locked">
+🔒 Contact Locked<br>
+Pay to unlock phone number
+<button class="unlock-btn" onclick="unlockContact()">Unlock Contact</button>
+</div>
 
-<h3>Rates</h3>
-2 Days — KSh 100<br>
-Weekly — KSh 400<br>
-Monthly — KSh 1200<br>
-
-<button onclick="book()">Book Now</button>
-
+<div class="contact" id="contact">
+✅ Phone: +254700123456<br>
+WhatsApp Available
 </div>
 
 </div>
 
 <script>
-function book(){
-  window.location.href="booking.html";
+
+// simulate payment success
+function unlockContact(){
+localStorage.setItem("sophiaPaid","true")
+document.getElementById("locked").style.display="none"
+document.getElementById("contact").style.display="block"
 }
+
+// check payment status
+if(localStorage.getItem("sophiaPaid") === "true"){
+document.getElementById("locked").style.display="none"
+document.getElementById("contact").style.display="block"
+}
+
 </script>
 
 </body>
-</html>
+  </html>
