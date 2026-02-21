@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Login</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+<h1>Admin Panel</h1>
+
+<form id="adminForm">
+<label>Admin Password</label>
+<input type="password" id="adminPass" required>
+
+<button class="btn">Login</button>
+</form>
+</div>
+
+<script>
+document.getElementById("adminForm").addEventListener("submit", e=>{
+e.preventDefault()
+
+const pass=document.getElementById("adminPass").value
+
+if(pass==="admin123"){
+localStorage.setItem("admin","true")
+window.location.href="admin-dashboard.html"
+}else{
+alert("Wrong password")
+}
+})
+</script>
+
+</body>
+</html>
