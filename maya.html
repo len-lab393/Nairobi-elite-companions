@@ -197,6 +197,33 @@ document.getElementById("contact").style.display="block"
 }
 
 </script>
+<script>
 
+async function checkUnlock(){
+
+const escortId = "1"
+
+const res = await fetch(
+"https://your-railway-url.up.railway.app/escort/"+escortId+"/status"
+)
+
+const data = await res.json()
+
+if(data.paid){
+
+document.getElementById("lockedContact").innerHTML = `
+<h3>Contact Unlocked ✅</h3>
+<p>Phone: 0712345678</p>
+<p>WhatsApp: 0712345678</p>
+`
+
+}
+
+}
+
+checkUnlock()
+setInterval(checkUnlock,5000)
+
+</script>
 </body>
   </html>
