@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+<h1>Admin Dashboard</h1>
+
+<h2>Users</h2>
+<div id="users"></div>
+
+<hr>
+
+<h2>Escort Pricing Setup</h2>
+
+<p>2 Days — KES 150</p>
+<p>Weekly — KES 400</p>
+<p>Monthly — KES 1200</p>
+
+<button id="logout" class="btn">Logout</button>
+
+</div>
+
+<script>
+if(localStorage.getItem("admin")!=="true"){
+window.location.href="admin-login.html"
+}
+
+const users=JSON.parse(localStorage.getItem("users")||"[]")
+const container=document.getElementById("users")
+
+function render(){
+container.innerHTML=""
+
+users.forEach((u,i)=>{
+container.innerHTML+=`
+<div class="card">
+<p>${u.email}</p>
+<p>Plan: ${u.plan||"none"}</p>
+
+<select onchange="setPlan(${i},this.value)">
+<option value="">Set Plan</option>
+<option value="2days">2 Days (150)</option>
+<option value="weekly">Weekly (400)</option>
+<option value="monthly">Monthly (1200)</option>
+</select>
+
+</div>
+`
+})
+}
+
+function setPlan(index,plan){
+users[index].plan=plan
+localStorage.setItem("users",JSON.stringify(users))
+render()
+}
+
+render()
+
+document.getElementById("logout").onclick=()=>{
+localStorage.removeItem("admin")
+window.location.href="admin-login.html"
+}
+</script>
+
+</body>
+  </html>
