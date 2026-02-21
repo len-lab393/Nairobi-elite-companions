@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Nairobi Elite Companions — Dashboard</title>
+<title>Dashboard</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -10,10 +10,10 @@
 
 <div class="container">
 <h1>Nairobi Elite Companions</h1>
-<h2>Member Dashboard</h2>
+<h2>Dashboard</h2>
 
 <p id="welcome"></p>
-<p>Your plan: <span id="plan">loading...</span></p>
+<p>Your plan: <span id="plan"></span></p>
 
 <a href="escorts.html" class="btn">Browse Companions</a>
 <button id="logout" class="btn">Logout</button>
@@ -28,18 +28,11 @@ window.location.href="login.html"
 
 document.getElementById("welcome").innerText="Welcome "+email
 
-// fetch user plan
-fetch("https://YOUR-BACKEND-URL/login",{
-method:"POST",
-headers:{ "Content-Type":"application/json" },
-body:JSON.stringify({email,password:"dummy"})
-})
-.then(res=>res.json())
-.then(data=>{
-document.getElementById("plan").innerText=data.plan || "none"
-})
+const users=JSON.parse(localStorage.getItem("users")||"[]")
+const user=users.find(u=>u.email===email)
 
-// logout
+document.getElementById("plan").innerText=user?.plan||"none"
+
 document.getElementById("logout").onclick=()=>{
 localStorage.clear()
 window.location.href="login.html"
