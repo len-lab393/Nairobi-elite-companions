@@ -147,7 +147,33 @@ required
 Pay to unlock phone number
 <button class="unlock-btn" onclick="unlockContact()">Unlock Contact</button>
 </div>
+<script>
+document.getElementById("paymentForm").addEventListener("submit", async (e)=>{
 
+e.preventDefault()
+
+const form = new FormData(e.target)
+
+const data = {
+plan: form.get("plan"),
+phone: form.get("phone")
+}
+
+// change ID to escort id
+const escortId = "1"
+
+const res = await fetch(
+"https://your-railway-url.up.railway.app/pay/" + escortId,
+{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify(data)
+})
+
+alert("Check your phone for MPESA prompt")
+
+})
+  </script>
 <div class="contact" id="contact">
 ✅ Phone: +254700123456<br>
 WhatsApp Available
