@@ -6,30 +6,24 @@
 
 <body>
 
-<h2>Choose Membership</h2>
+<h2>Escort Membership</h2>
 
-<button onclick="buyPlan('2day')">KSh 150 / 2 days</button><br><br>
-<button onclick="buyPlan('weekly')">KSh 400 / week</button><br><br>
-<button onclick="buyPlan('monthly')">KSh 1200 / month</button><br><br>
+<button onclick="pay()">Pay KSh 150 (2 days)</button>
+<button onclick="payWeek()">Pay KSh 400 (1 week)</button>
+<button onclick="payMonth()">Pay KSh 1200 (1 month)</button>
 
 <script>
-function buyPlan(planName) {
-
-  let user = JSON.parse(localStorage.getItem("user"));
-
-  if (!user) {
-    alert("Login first");
-    window.location.href="login.html";
-    return;
-  }
-
-  user.plan = planName;
-
-  localStorage.setItem("user", JSON.stringify(user));
-
-  alert("Payment successful. Membership activated.");
-  window.location.href="dashboard.html";
+function updatePlan(plan){
+let user = JSON.parse(localStorage.getItem("user"));
+user.plan = plan;
+localStorage.setItem("user", JSON.stringify(user));
+alert("Payment successful");
+window.location.href="dashboard.html";
 }
+
+function pay(){ updatePlan("2days"); }
+function payWeek(){ updatePlan("week"); }
+function payMonth(){ updatePlan("month"); }
 </script>
 
 </body>
