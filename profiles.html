@@ -6,39 +6,28 @@
 
 <body>
 
-<h2>Escort Profiles</h2>
+<h2>Available Escorts</h2>
 
-<div id="content"></div>
+<div id="profiles"></div>
 
 <script>
-const user = JSON.parse(localStorage.getItem("user"));
-const isMember = user && user.plan;
+let profiles = JSON.parse(localStorage.getItem("profiles")) || [];
 
-let profilesHTML = `
-<h3>🔥 Premium Escort</h3>
-<img src="https://via.placeholder.com/200"><br>
-Age: 23<br>
-Location: Nairobi<br>
+let html = "";
+
+profiles.forEach(p => {
+html += `
+<div style="border:1px solid black; margin:10px; padding:10px;">
+Name: ${p.name}<br>
+Age: ${p.age}<br>
+Location: ${p.location}<br>
+Phone: ${p.phone}
+</div>
 `;
+});
 
-if (isMember) {
-  // MEMBERS SEE CONTACT
-  profilesHTML += `
-  <p style="color:green">✅ Contact: +254700000000</p>
-  `;
-} else {
-  // NON MEMBERS SEE LOCK
-  profilesHTML += `
-  <p style="color:red">🔒 Contact locked — buy membership</p>
-  <button onclick="goPay()">Unlock Contact</button>
-  `;
-}
-
-document.getElementById("content").innerHTML = profilesHTML;
-
-function goPay(){
-  window.location.href="pay.html";
-}
+document.getElementById("profiles").innerHTML =
+html || "No escorts available";
 </script>
 
 </body>
