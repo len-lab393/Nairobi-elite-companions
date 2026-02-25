@@ -13,28 +13,31 @@
 <button onclick="subscribe('month')">KSh 1200 / month</button>
 
 <script>
-function subscribe(plan){
+function subscribe(days){
 
 let user = JSON.parse(localStorage.getItem("user"));
-user.plan = plan;
+
+const now = new Date();
+
+/* calculate expiry */
+now.setDate(now.getDate() + days);
+
+user.plan = days + "days";
+user.active = true;
+user.expiresAt = now;
+
 localStorage.setItem("user", JSON.stringify(user));
 
-/* activate escort profile */
-let profiles = JSON.parse(localStorage.getItem("profiles")) || [];
-
-profiles.forEach(p=>{
-if(p.email === user.email){
-p.active = true;
-}
-});
-
-localStorage.setItem("profiles", JSON.stringify(profiles));
-
-alert("Subscription active. Profile published!");
+alert("Subscription active. Account published.");
 
 window.location.href="dashboard.html";
 }
-</script>
+
+/* plans */
+function pay2days(){ subscribe(2); }
+function payWeek(){ subscribe(7); }
+function payMonth(){ subscribe(30); }
+  </script>
 
 </body>
 </html>
