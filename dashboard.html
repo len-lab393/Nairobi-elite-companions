@@ -26,48 +26,15 @@ window.location.href="pay.html";
   </script>
 <body>
 
-<h2>Dashboard</h2>
+<h2>Escort Dashboard</h2>
 
-Email: <span id="userEmail"></span><br>
-Plan: <span id="userPlan"></span><br><br>
+<p>Subscription active ✅</p>
 
-<button onclick="goPay()">Buy Membership</button>
-<button onclick="viewProfiles()">View Escorts</button>
-<button onclick="logout()">Logout</button>
+<button onclick="upload()">Upload Profile</button>
+
 <script>
-const user = JSON.parse(localStorage.getItem("user"));
-
-if(!user){
-alert("Login first");
-window.location.href="login.html";
-}
-
-if(user.role === "escort" && !user.plan){
-alert("Escort accounts require membership");
-window.location.href="pay.html";
-}
-</script>
-<script>
-const user = JSON.parse(localStorage.getItem("user"));
-
-if (!user) {
-  window.location.href = "login.html";
-}
-
-document.getElementById("userEmail").innerText = user.email;
-document.getElementById("userPlan").innerText = user.plan || "none";
-
-function goPay(){
-  window.location.href="pay.html";
-}
-
-function viewProfiles(){
-  window.location.href="profiles.html";
-}
-
-function logout(){
-  localStorage.removeItem("user");
-  window.location.href="login.html";
+function upload(){
+alert("Upload system coming next");
 }
 </script>
 
