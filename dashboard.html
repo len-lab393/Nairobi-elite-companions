@@ -14,7 +14,19 @@ Plan: <span id="userPlan"></span><br><br>
 <button onclick="goPay()">Buy Membership</button>
 <button onclick="viewProfiles()">View Escorts</button>
 <button onclick="logout()">Logout</button>
+<script>
+const user = JSON.parse(localStorage.getItem("user"));
 
+if(!user){
+alert("Login first");
+window.location.href="login.html";
+}
+
+if(user.role === "escort" && !user.plan){
+alert("Escort accounts require membership");
+window.location.href="pay.html";
+}
+</script>
 <script>
 const user = JSON.parse(localStorage.getItem("user"));
 
