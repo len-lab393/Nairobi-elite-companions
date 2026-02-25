@@ -20,23 +20,14 @@
 </div>
 
 <script>
-const email=localStorage.getItem("userEmail")
+const user = JSON.parse(localStorage.getItem("user"));
 
-if(!email){
-window.location.href="login.html"
+if (!user) {
+  window.location.href = "login.html";
 }
 
-document.getElementById("welcome").innerText="Welcome "+email
-
-const users=JSON.parse(localStorage.getItem("users")||"[]")
-const user=users.find(u=>u.email===email)
-
-document.getElementById("plan").innerText=user?.plan||"none"
-
-document.getElementById("logout").onclick=()=>{
-localStorage.clear()
-window.location.href="login.html"
-}
+document.getElementById("userEmail").innerText = user.email;
+document.getElementById("userPlan").innerText = user.plan || "none";
 </script>
 
 </body>
