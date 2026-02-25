@@ -1,49 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Nairobi Elite Companions — Login</title>
-<link rel="stylesheet" href="style.css">
+<title>Login</title>
 </head>
 
 <body>
 
-<div class="container">
-<h1>Nairobi Elite Companions</h1>
-<h2>Member Login</h2>
+<h2>Login</h2>
 
-<form id="loginForm">
-<label>Email</label>
-<input type="email" id="email" required>
+<input type="email" id="email" placeholder="Email"><br><br>
+<input type="password" id="password" placeholder="Password"><br><br>
 
-<label>Password</label>
-<input type="password" id="password" required>
+<button onclick="login()">Login</button>
 
-<button type="submit" class="btn">Login</button>
-</form>
-
-<p>No account? <a href="register.html">Register here</a></p>
-</div>
+<p>No account? <a href="register.html">Register</a></p>
 
 <script>
-document.getElementById("loginForm").addEventListener("submit", e=>{
-e.preventDefault()
+function login() {
+  const savedUser = JSON.parse(localStorage.getItem("user"));
 
-const email=document.getElementById("email").value
-const password=document.getElementById("password").value
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-const users=JSON.parse(localStorage.getItem("users")||"[]")
+  if (!savedUser || savedUser.email !== email || savedUser.password !== password) {
+    alert("Wrong login");
+    return;
+  }
 
-const user=users.find(u=>u.email===email && u.password===password)
-
-if(!user){
-alert("Invalid login")
-return
+  alert("Login successful");
+  window.location.href = "dashboard.html";
 }
-
-localStorage.setItem("userEmail",email)
-window.location.href="dashboard.html"
-})
 </script>
 
 </body>
