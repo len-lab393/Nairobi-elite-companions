@@ -30,5 +30,23 @@ Phone: ${p.phone}
 document.getElementById("profiles").innerHTML =
 html || "No escorts available";
   </script>
+  <script>
+let user = JSON.parse(localStorage.getItem("user"));
+
+if(user && user.expiresAt){
+
+const now = new Date();
+const expiry = new Date(user.expiresAt);
+
+if(now > expiry){
+user.active = false;
+user.plan = null;
+
+localStorage.setItem("user", JSON.stringify(user));
+
+alert("Subscription expired. Account hidden.");
+}
+}
+  </script>
 </body>
 </html>
