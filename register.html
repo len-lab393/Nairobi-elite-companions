@@ -1,50 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Nairobi Elite Companions — Register</title>
-<link rel="stylesheet" href="style.css">
+<title>Register</title>
 </head>
 
 <body>
 
-<div class="container">
-<h1>Nairobi Elite Companions</h1>
-<h2>Create Account</h2>
+<h2>Register</h2>
 
-<form id="registerForm">
-<label>Email</label>
-<input type="email" id="email" required>
+<input type="email" id="email" placeholder="Email"><br><br>
+<input type="password" id="password" placeholder="Password"><br><br>
 
-<label>Password</label>
-<input type="password" id="password" required>
+<button onclick="register()">Register</button>
 
-<button type="submit" class="btn">Register</button>
-</form>
-
-<p>Already a member? <a href="login.html">Login</a></p>
-</div>
+<p>Already have account? <a href="login.html">Login</a></p>
 
 <script>
-document.getElementById("registerForm").addEventListener("submit", e=>{
-e.preventDefault()
+function register() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-const email=document.getElementById("email").value
-const password=document.getElementById("password").value
+  if (!email || !password) {
+    alert("Fill everything");
+    return;
+  }
 
-let users=JSON.parse(localStorage.getItem("users")||"[]")
+  const user = {
+    email: email,
+    password: password,
+    plan: null
+  };
 
-if(users.find(u=>u.email===email)){
-alert("Email already exists")
-return
+  localStorage.setItem("user", JSON.stringify(user));
+
+  alert("Registered successfully");
+  window.location.href = "login.html";
 }
-
-users.push({email,password,plan:"none"})
-localStorage.setItem("users",JSON.stringify(users))
-
-alert("Account created")
-window.location.href="login.html"
-})
 </script>
 
 </body>
