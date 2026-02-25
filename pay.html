@@ -16,12 +16,21 @@
 function subscribe(plan){
 
 let user = JSON.parse(localStorage.getItem("user"));
-
 user.plan = plan;
-
 localStorage.setItem("user", JSON.stringify(user));
 
-alert("Subscription active");
+/* activate escort profile */
+let profiles = JSON.parse(localStorage.getItem("profiles")) || [];
+
+profiles.forEach(p=>{
+if(p.email === user.email){
+p.active = true;
+}
+});
+
+localStorage.setItem("profiles", JSON.stringify(profiles));
+
+alert("Subscription active. Profile published!");
 
 window.location.href="dashboard.html";
 }
