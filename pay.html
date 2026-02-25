@@ -1,26 +1,81 @@
 <!DOCTYPE html>
 <html>
-<body>
-<h2>Test MPesa STK Push</h2>
+<head>
+<title>Choose Membership</title>
 
-<input type="text" id="phone" placeholder="2547XXXXXXXX">
-<input type="number" id="amount" placeholder="Amount">
-<button onclick="pay()">Pay</button>
+<style>
+body{
+font-family:Arial;
+text-align:center;
+background:#111;
+color:white;
+}
+
+.plan{
+border:1px solid #333;
+padding:20px;
+margin:20px;
+border-radius:10px;
+}
+
+button{
+padding:10px 20px;
+background:green;
+color:white;
+border:none;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Choose Membership</h1>
+
+<input id="email" placeholder="Your email"><br><br>
+<input id="phone" placeholder="2547XXXXXXXX"><br><br>
+
+<div class="plan">
+<h3>2 Days</h3>
+<p>KSh 150</p>
+<button onclick="pay(150,2)">Buy</button>
+</div>
+
+<div class="plan">
+<h3>Weekly</h3>
+<p>KSh 400</p>
+<button onclick="pay(400,7)">Buy</button>
+</div>
+
+<div class="plan">
+<h3>Monthly</h3>
+<p>KSh 1200</p>
+<button onclick="pay(1200,30)">Buy</button>
+</div>
 
 <script>
-function pay() {
-  const phone = document.getElementById("phone").value;
-  const amount = document.getElementById("amount").value;
 
-  fetch("https://backend-production-6cd4.up.railway.app/pay", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ phone, amount })
-  })
-  .then(res => res.json())
-  .then(data => alert(JSON.stringify(data)))
-  .catch(err => alert(err));
+function pay(amount,days){
+
+const email=document.getElementById("email").value;
+const phone=document.getElementById("phone").value;
+
+if(!email||!phone){
+alert("Enter email and phone");
+return;
 }
+
+fetch("https://backend-production-6cd4.up.railway.app/pay",{
+method:"POST",
+headers:{ "Content-Type":"application/json" },
+body:JSON.stringify({ email,phone,amount,days })
+})
+.then(r=>r.json())
+.then(d=>alert("Check your phone for MPesa prompt"))
+.catch(e=>alert("Payment failed"));
+
+}
+
 </script>
 
 </body>
