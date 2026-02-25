@@ -15,9 +15,9 @@
 Email: <span id="userEmail"></span><br>
 Plan: <span id="userPlan"></span>
 
-<a href="escorts.html" class="btn">Browse Companions</a>
-<button id="logout" class="btn">Logout</button>
-</div>
+<button onclick="buyPlan('2day')">KSh 150 / 2 days</button>
+<button onclick="buyPlan('weekly')">KSh 400 / week</button>
+<button onclick="buyPlan('monthly')">KSh 1200 / month</button>
 
 <script>
 const user = JSON.parse(localStorage.getItem("user"));
@@ -29,6 +29,23 @@ if (!user) {
 document.getElementById("userEmail").innerText = user.email;
 document.getElementById("userPlan").innerText = user.plan || "none";
 </script>
+<script>
+function buyPlan(planName) {
+  let user = JSON.parse(localStorage.getItem("user"));
 
+  if (!user) {
+    alert("Login first");
+    window.location.href = "login.html";
+    return;
+  }
+
+  user.plan = planName;
+
+  localStorage.setItem("user", JSON.stringify(user));
+
+  alert("Payment successful. Membership activated.");
+  window.location.href = "dashboard.html";
+}
+      </script>
 </body>
 </html>
