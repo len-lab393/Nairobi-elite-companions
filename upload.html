@@ -9,35 +9,39 @@
 
 <script>
 function saveProfile(){
+<script>
+function saveProfile(){
 
 const user = JSON.parse(localStorage.getItem("user"));
 
-/* MUST be escort */
 if(!user || user.role !== "escort"){
 alert("Escort account required");
 window.location.href="register.html";
 return;
 }
 
-/* MUST have paid */
-if(!user.plan){
-alert("Subscription required to publish profile");
-window.location.href="pay.html";
-return;
-}
-
 let profiles = JSON.parse(localStorage.getItem("profiles")) || [];
+
+/* profile hidden unless paid */
+let isActive = user.plan ? true : false;
 
 profiles.push({
 email: user.email,
 name: document.getElementById("name").value,
 phone: document.getElementById("phone").value,
 age: document.getElementById("age").value,
-location: document.getElementById("location").value
+location: document.getElementById("location").value,
+gender: document.getElementById("gender").value,
+active: isActive
 });
 
 localStorage.setItem("profiles", JSON.stringify(profiles));
 
+if(isActive){
 alert("Profile published!");
+}else{
+alert("Profile saved. Subscribe to publish.");
+window.location.href="pay.html";
 }
-  </script>
+}
+</script>
