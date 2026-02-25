@@ -3,7 +3,27 @@
 <head>
 <title>Dashboard</title>
 </head>
+<script>
+const user = JSON.parse(localStorage.getItem("user"));
 
+/* not logged in */
+if(!user){
+alert("Login first");
+window.location.href="login.html";
+}
+
+/* not escort */
+if(user.role !== "escort"){
+alert("Escort account required");
+window.location.href="index.html";
+}
+
+/* escort but not subscribed */
+if(!user.plan){
+alert("Subscription required before accessing dashboard");
+window.location.href="pay.html";
+}
+  </script>
 <body>
 
 <h2>Dashboard</h2>
