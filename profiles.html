@@ -40,14 +40,14 @@ if(today > expiry){
 }
 </script>
 
-  
-<script>
-if(!localStorage.getItem("membershipExpiry") ||
-Date.now() > localStorage.getItem("membershipExpiry")){
-alert("Membership required");
-window.location.href="pricing.html";
+  <script>
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user || !user.plan) {
+  alert("Membership required");
+  window.location.href = "pay.html";
 }
-</script>
+  </script>
 <body>
 
 <h1>Available Companions</h1>
