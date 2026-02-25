@@ -1,42 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Dashboard</title>
-</head>
+<h2>Escort Dashboard</h2>
+
+<p>Subscription active ✅</p>
+
+<button onclick="goUpload()">Create / Edit Profile</button>
+
 <script>
+
+/* SECURITY LOCK */
 const user = JSON.parse(localStorage.getItem("user"));
 
-/* not logged in */
 if(!user){
 alert("Login first");
 window.location.href="login.html";
 }
 
-/* not escort */
 if(user.role !== "escort"){
 alert("Escort account required");
 window.location.href="index.html";
 }
 
-/* escort but not subscribed */
 if(!user.plan){
-alert("Subscription required before accessing dashboard");
+alert("Subscription required");
 window.location.href="pay.html";
 }
-  </script>
-<body>
 
-<h2>Escort Dashboard</h2>
-
-<p>Subscription active ✅</p>
-
-<button onclick="upload()">Upload Profile</button>
-
-<script>
-function upload(){
-alert("Upload system coming next");
+/* NAVIGATION */
+function goUpload(){
+window.location.href="upload.html";
 }
-</script>
 
-</body>
-</html>
+</script>
