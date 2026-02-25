@@ -4,72 +4,69 @@
 <title>Admin Dashboard</title>
 
 <style>
-
 body{
-  font-family: Arial;
-  background:#111;
-  color:white;
-  padding:40px;
+font-family:Arial;
+background:#111;
+color:white;
+text-align:center;
 }
 
-.container{
-  max-width:700px;
-  margin:auto;
+table{
+margin:auto;
+border-collapse:collapse;
 }
 
-.card{
-  background:#1f1f1f;
-  padding:25px;
-  border-radius:10px;
-  margin-top:20px;
+td,th{
+border:1px solid #333;
+padding:10px;
 }
-
-.active{
-  color:lime;
-}
-
-.expired{
-  color:red;
-}
-
-button{
-  padding:10px 20px;
-  margin-top:15px;
-  cursor:pointer;
-}
-
 </style>
-
 </head>
 
 <body>
 
-<div class="container">
+<h1>Admin Dashboard</h1>
 
-<h1>Admin Control Panel</h1>
+<button onclick="loadUsers()">Load Data</button>
 
-<div class="card" id="adminData"></div>
+<table>
+<thead>
+<tr>
+<th>Email</th>
+<th>Plan</th>
+<th>Expiry</th>
+</tr>
+</thead>
 
-<button onclick="clearSub()">Remove Subscription</button>
-<button onclick="logout()">Logout</button>
+<tbody id="data"></tbody>
+</table>
 
-</div>
-<script type="module">
+<script>
 
-import { db } from "./firebase.js";
-import { collection, getDocs }
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+function loadUsers(){
 
-let users = await getDocs(collection(db,"users"));
-let bookings = await getDocs(collection(db,"bookings"));
+fetch("https://backend-production-6cd4.up.railway.app/admin-data")
+.then(r=>r.json())
+.then(users=>{
 
-document.getElementById("adminData").innerHTML = `
-Total Users: ${users.size}<br>
-Total Bookings: ${bookings.size}
-`;
+let html="";
+
+users.forEach(u=>{
+html+=`
+<tr>
+<td>${u.email}</td>
+<td>${u.plan||"None"}</td>
+<td>${u.membershipExpires?new Date(u.membershipExpires).toLocaleString():"None"}</td>
+</tr>`;
+});
+
+document.getElementById("data").innerHTML=html;
+
+});
+
+}
 
 </script>
-
 
 </body>
 </html>
