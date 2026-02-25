@@ -1,32 +1,43 @@
-<input type="file" id="file">
-<button onclick="upload()">Upload Image</button>
+<h2>Create Escort Profile</h2>
 
-<script type="module">
+<input id="name" placeholder="Name"><br><br>
+<input id="phone" placeholder="Phone"><br><br>
+<input id="age" placeholder="Age"><br><br>
+<input id="location" placeholder="Location"><br><br>
 
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+<button onclick="saveProfile()">Publish Profile</button>
 
-import { getStorage, ref, uploadBytes, getDownloadURL }
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+<script>
+function saveProfile(){
 
-const firebaseConfig = {
-  // paste your config
-};
+const user = JSON.parse(localStorage.getItem("user"));
 
-const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
-
-window.upload = async function(){
-
-  let file = document.getElementById("file").files[0];
-
-  let storageRef = ref(storage,"profiles/"+file.name);
-
-  await uploadBytes(storageRef,file);
-
-  let url = await getDownloadURL(storageRef);
-
-  alert("Image uploaded: " + url);
+/* MUST be escort */
+if(!user || user.role !== "escort"){
+alert("Escort account required");
+window.location.href="register.html";
+return;
 }
 
-</script>
+/* MUST have paid */
+if(!user.plan){
+alert("Subscription required to publish profile");
+window.location.href="pay.html";
+return;
+}
+
+let profiles = JSON.parse(localStorage.getItem("profiles")) || [];
+
+profiles.push({
+email: user.email,
+name: document.getElementById("name").value,
+phone: document.getElementById("phone").value,
+age: document.getElementById("age").value,
+location: document.getElementById("location").value
+});
+
+localStorage.setItem("profiles", JSON.stringify(profiles));
+
+alert("Profile published!");
+}
+  </script>
