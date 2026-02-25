@@ -12,17 +12,33 @@
 
 <script>
 const user = JSON.parse(localStorage.getItem("user"));
+const isMember = user && user.plan;
 
-if (!user || !user.plan) {
-  alert("Membership required");
-  window.location.href="pay.html";
+let profilesHTML = `
+<h3>🔥 Premium Escort</h3>
+<img src="https://via.placeholder.com/200"><br>
+Age: 23<br>
+Location: Nairobi<br>
+`;
+
+if (isMember) {
+  // MEMBERS SEE CONTACT
+  profilesHTML += `
+  <p style="color:green">✅ Contact: +254700000000</p>
+  `;
+} else {
+  // NON MEMBERS SEE LOCK
+  profilesHTML += `
+  <p style="color:red">🔒 Contact locked — buy membership</p>
+  <button onclick="goPay()">Unlock Contact</button>
+  `;
 }
 
-document.getElementById("content").innerHTML = `
-<h3>Available Escorts</h3>
-<p>Contact: +254700000000</p>
-<p>More profiles coming...</p>
-`;
+document.getElementById("content").innerHTML = profilesHTML;
+
+function goPay(){
+  window.location.href="pay.html";
+}
 </script>
 
 </body>
