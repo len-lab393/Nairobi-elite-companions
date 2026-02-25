@@ -1,96 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Companion Profiles</title>
-<link rel="stylesheet" href="style.css">
+<title>Escort Profiles</title>
 </head>
+
+<body>
+
+<h2>Escort Profiles</h2>
+
+<div id="content"></div>
+
 <script>
-let sub = JSON.parse(localStorage.getItem("subscription"));
-
-if(!sub){
-  alert("No active subscription");
-  window.location.href = "pricing.html";
-}
-
-let today = new Date();
-let expiry = new Date(sub.expiry);
-
-if(today > expiry){
-  alert("Your subscription has expired");
-
-  localStorage.removeItem("subscription"); // auto unsubscribe
-  window.location.href = "pricing.html";
-}
-<script>
-let sub = JSON.parse(localStorage.getItem("subscription"));
-
-if(!sub){
-  alert("No active subscription");
-  window.location.href = "pricing.html";
-}
-
-let today = new Date();
-let expiry = new Date(sub.expiry);
-
-if(today > expiry){
-  alert("Your subscription has expired");
-
-  localStorage.removeItem("subscription"); // auto unsubscribe
-  window.location.href = "pricing.html";
-}
-</script>
-
-  <script>
 const user = JSON.parse(localStorage.getItem("user"));
 
 if (!user || !user.plan) {
   alert("Membership required");
-  window.location.href = "pay.html";
+  window.location.href="pay.html";
 }
-  </script>
-<body>
 
-<h1>Available Companions</h1>
+document.getElementById("content").innerHTML = `
+<h3>Available Escorts</h3>
+<p>Contact: +254700000000</p>
+<p>More profiles coming...</p>
+`;
+</script>
 
-<div class="gallery">
-
-<div class="card">
-<!DOCTYPE html>
-<html>
-<head>
-<title>Companion Profiles</title>
-<link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-<h1>Available Companions</h1>
-
-<div class="gallery">
-
-<a href="sophia.html" class="card">
-<img src="https://picsum.photos/300/300?random=1">
-<h2>Sophia</h2>
-<p>Age: 24</p>
-<p>Nairobi</p>
-</a>
-
-<a href="maya.html" class="card">
-<img src="https://picsum.photos/300/300?random=2">
-<h2>Maya</h2>
-<p>Age: 26</p>
-<p>Nairobi</p>
-</a>
-
-<a href="lina.html" class="card">
-<img src="https://picsum.photos/300/300?random=3">
-<h2>Lina</h2>
-<p>Age: 23</p>
-<p>Nairobi</p>
-</a>
-
-</div>
-<br>
-<a href="booking.html">Book Now</a>
 </body>
 </html>
