@@ -1,81 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Choose Membership</title>
-
-<style>
-body{
-font-family:Arial;
-text-align:center;
-background:#111;
-color:white;
-}
-
-.plan{
-border:1px solid #333;
-padding:20px;
-margin:20px;
-border-radius:10px;
-}
-
-button{
-padding:10px 20px;
-background:green;
-color:white;
-border:none;
-cursor:pointer;
-}
-</style>
+<title>Buy Membership</title>
 </head>
 
 <body>
 
-<h1>Choose Membership</h1>
+<h2>Choose Membership</h2>
 
-<input id="email" placeholder="Your email"><br><br>
-<input id="phone" placeholder="2547XXXXXXXX"><br><br>
-
-<div class="plan">
-<h3>2 Days</h3>
-<p>KSh 150</p>
-<button onclick="pay(150,2)">Buy</button>
-</div>
-
-<div class="plan">
-<h3>Weekly</h3>
-<p>KSh 400</p>
-<button onclick="pay(400,7)">Buy</button>
-</div>
-
-<div class="plan">
-<h3>Monthly</h3>
-<p>KSh 1200</p>
-<button onclick="pay(1200,30)">Buy</button>
-</div>
+<button onclick="buyPlan('2day')">KSh 150 / 2 days</button><br><br>
+<button onclick="buyPlan('weekly')">KSh 400 / week</button><br><br>
+<button onclick="buyPlan('monthly')">KSh 1200 / month</button><br><br>
 
 <script>
+function buyPlan(planName) {
 
-function pay(amount,days){
+  let user = JSON.parse(localStorage.getItem("user"));
 
-const email=document.getElementById("email").value;
-const phone=document.getElementById("phone").value;
+  if (!user) {
+    alert("Login first");
+    window.location.href="login.html";
+    return;
+  }
 
-if(!email||!phone){
-alert("Enter email and phone");
-return;
+  user.plan = planName;
+
+  localStorage.setItem("user", JSON.stringify(user));
+
+  alert("Payment successful. Membership activated.");
+  window.location.href="dashboard.html";
 }
-
-fetch("https://backend-production-6cd4.up.railway.app/pay",{
-method:"POST",
-headers:{ "Content-Type":"application/json" },
-body:JSON.stringify({ email,phone,amount,days })
-})
-.then(r=>r.json())
-.then(d=>alert("Check your phone for MPesa prompt"))
-.catch(e=>alert("Payment failed"));
-
-}
-
 </script>
 
 </body>
