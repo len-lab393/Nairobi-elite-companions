@@ -9,16 +9,17 @@
 <h2>Available Escorts</h2>
 
 <div id="profiles"></div>
-
 <script>
 let profiles = JSON.parse(localStorage.getItem("profiles")) || [];
 
 let html = "";
 
-profiles.forEach(p => {
+/* show only active profiles */
+profiles.filter(p => p.active).forEach(p => {
 html += `
-<div style="border:1px solid black; margin:10px; padding:10px;">
+<div style="border:1px solid black;margin:10px;padding:10px;">
 Name: ${p.name}<br>
+Gender: ${p.gender}<br>
 Age: ${p.age}<br>
 Location: ${p.location}<br>
 Phone: ${p.phone}
@@ -28,7 +29,6 @@ Phone: ${p.phone}
 
 document.getElementById("profiles").innerHTML =
 html || "No escorts available";
-</script>
-
+  </script>
 </body>
 </html>
