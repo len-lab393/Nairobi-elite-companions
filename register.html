@@ -8,7 +8,11 @@
 
 <h2>Create Account</h2>
 
+<input id="name" placeholder="Name"><br><br>
 <input id="email" placeholder="Email"><br><br>
+<input id="phone" placeholder="Phone Number"><br><br>
+<input id="city" placeholder="City"><br><br>
+<input id="age" type="number" placeholder="Age"><br><br>
 
 <select id="role">
 <option value="escort">Escort (requires payment)</option>
@@ -18,27 +22,36 @@
 <button onclick="register()">Register</button>
 
 <script>
+
 function register(){
 
+const name = document.getElementById("name").value;
 const email = document.getElementById("email").value;
+const phone = document.getElementById("phone").value;
+const city = document.getElementById("city").value;
+const age = document.getElementById("age").value;
 const role = document.getElementById("role").value;
 
 const user = {
+name: name,
 email: email,
+phone: phone,
+city: city,
+age: age,
 role: role,
 plan: null,
-active: false,     // account hidden
-expiresAt: null    // no subscription yet
+active: false,
+expiresAt: null
 };
 
 localStorage.setItem("user", JSON.stringify(user));
 
 alert("Account created. Subscribe to publish.");
 
-window.location.href="pay.html";
+window.location.href = "pay.html";
 }
-</script>
 
+</script>
 
 </body>
 </html>
