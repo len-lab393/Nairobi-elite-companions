@@ -19,18 +19,13 @@
   <div id="profile"></div>
 
   <h3>Update Profile</h3>
-  <input id="updateEmail" placeholder="New Email" />
-  <input id="updatePhotos" placeholder="Photos URLs, comma-separated" />
-  <input id="updateVideo" placeholder="Video URL" />
-  <button onclick="updateProfile()">Update Profile</button>
+<input id="updateEmail" placeholder="New Email" />
+<input type="file" id="updatePhotos" multiple accept="image/*" />
+<input type="file" id="updateVideo" accept="video/*" />
+<button onclick="updateProfileFiles()">Update Profile</button>
 
 <script>
-let token = "";
-
-// ----------------- REGISTER -----------------
-async function register() {
-  const username = document.getElementById("regUsername").value;
-  const email = document.getElementById("regEmail").value;
+ = document.getElementById("regEmail").value;
   const password = document.getElementById("regPassword").value;
 
   const res = await fetch("/api/escorts/register", {
