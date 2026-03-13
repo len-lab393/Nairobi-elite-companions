@@ -1,23 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="age.js"></script>
-<title>Elite Companions</title>
-<link rel="stylesheet" href="style.css">
+  <title>Escort Platform</title>
 </head>
-
 <body>
+  <h2>Register</h2>
+  <input id="regUsername" placeholder="Username" />
+  <input id="regEmail" placeholder="Email" />
+  <input id="regPassword" type="password" placeholder="Password" />
+  <button onclick="register()">Register</button>
 
-<h1>Elite Companions Agency</h1>
+  <h2>Login</h2>
+  <input id="loginUsername" placeholder="Username" />
+  <input id="loginPassword" type="password" placeholder="Password" />
+  <button onclick="login()">Login</button>
 
-<nav>
-<a href="profiles.html">Profiles</a>
-<a href="booking.html">Booking</a>
-<a href="about.html">About</a>
-</nav>
+  <h2>Profile</h2>
+  <div id="profile"></div>
 
-<p>Premium companion booking service.</p>
+  <h3>Update Profile</h3>
+  <input id="updateEmail" placeholder="New Email" />
+  <input id="updatePhotos" placeholder="Photos URLs, comma-separated" />
+  <input id="updateVideo" placeholder="Video URL" />
+  <button onclick="updateProfile()">Update Profile</button>
 
+<script>
+let token = "";
+
+// ----------------- REGISTER -----------------
+async function register() {
+  const username = document.getElementById("regUsername").value;
+  const email = document.getElementById("regEmail").value;
+  const password = document.getElementById("regPassword").value;
+
+  const res = await fetch("/api/escorts/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, email, password })
+  });
+  const data = await res.json();
+  alert(data.message || data.error);
+}
+
+// ----------------- LOGIN -----------------
+async function login() {
+  const username = document.getElementById("loginUsername").value;
+  const password = document.getElementById("loginPassword").value;
+
+  const res = await fetch("/api/escorts/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password })
+  });
+  const data = await res.json();
+  if (data.token) {
+    token = data.token;
+    alert("Login successful");
+    fetchProfile();
+  } else {
+    alert(data.error);
+  }
+}
+
+// ----------------- FETCH PROFILE -----------------
+async function fetchProfile() {
+  if (!token) return alert("Not logged in");
+
+  const res = await fetch("/api/escorts/me", {
+    headers: { "Authorization": "Bearer " + token }
+  });
+  const profile = await res.json();
+  document.getElementById("profile").innerText = JSON.stringify(profile, null, 2);
+}
+
+// ----------------- UPDATE PROFILE -----------------
+async function updateProfile() {
+  if (!token) return alert("Not logged in");
+
+  const email = document.getElementById("updateEmail").value;
+  const photos = document.getElementById("updatePhotos").value.split(",").map(p => p.trim());
+  const video = document.getElementById("updateVideo").value;
+
+  const res = await fetch("/api/escorts/me", {
+    method: "PUT",
+    headers: { 
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token 
+    },
+    body: JSON.stringify({ email, photos, video })
+  });
+
+  const data = await res.json();
+  document.getElementById("profile").innerText = JSON.stringify(data, null, 2);
+  alert("Profile updated");
+}
+</script>
 </body>
 </html>
-<a href="register.html">Register</a>
