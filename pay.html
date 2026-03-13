@@ -8,36 +8,51 @@
 
 <h2>Escort Subscription</h2>
 
-<button onclick="subscribe('2days')">KSh 150 / 2 days</button>
-<button onclick="subscribe('week')">KSh 400 / week</button>
-<button onclick="subscribe('month')">KSh 1200 / month</button>
+<button onclick="subscribe('2days',150)">KSh 150 / 2 days</button>
+<button onclick="subscribe('week',400)">KSh 400 / week</button>
+<button onclick="subscribe('month',1200)">KSh 1200 / month</button>
 
 <script>
-function subscribe(days){
+
+async function subscribe(plan, amount){
 
 let user = JSON.parse(localStorage.getItem("user"));
 
-const now = new Date();
-
-/* calculate expiry */
-now.setDate(now.getDate() + days);
-
-user.plan = days + "days";
-user.active = true;
-user.expiresAt = now;
-
-localStorage.setItem("user", JSON.stringify(user));
-
-alert("Subscription active. Account published.");
-
-window.location.href="dashboard.html";
+if(!user){
+alert("No account found");
+return;
 }
 
-/* plans */
-function pay2days(){ subscribe(2); }
-function payWeek(){ subscribe(7); }
-function payMonth(){ subscribe(30); }
-  </script>
+try{
+
+const response = await fetch("https://YOUR-BACKEND-URL/api/mpesa/stkpush",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+phone:user.phone,
+amount:amount,
+plan:plan
+})
+});
+
+const data = await response.json();
+
+console.log(data);
+
+alert("Check your phone and enter your M-Pesa PIN");
+
+}catch(error){
+
+console.error(error);
+alert("Payment request failed");
+
+}
+
+}
+
+</script>
 
 </body>
 </html>
