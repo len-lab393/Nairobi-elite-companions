@@ -9,35 +9,32 @@
 
 <h2>Escort Login</h2>
 
-<input id="email" type="email" placeholder="Email"><br><br>
-
+<input id="email" placeholder="Email"><br><br>
 <input id="password" type="password" placeholder="Password"><br><br>
 
 <button onclick="login()">Login</button>
-
-<p>No account? <a href="register.html">Register</a></p>
 
 <script>
 
 function login(){
 
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+let users = JSON.parse(localStorage.getItem("users")) || []
 
-let users = JSON.parse(localStorage.getItem("users")) || [];
+const email=document.getElementById("email").value
+const password=document.getElementById("password").value
 
-const user = users.find(u => u.email === email && u.password === password);
+let user = users.find(u=>u.email===email && u.password===password)
 
 if(!user){
-alert("Wrong email or password");
-return;
+
+alert("Wrong login")
+return
+
 }
 
-localStorage.setItem("currentUser", JSON.stringify(user));
+localStorage.setItem("currentUser",JSON.stringify(user))
 
-alert("Login successful");
-
-window.location.href = "dashboard.html";
+window.location.href="dashboard.html"
 
 }
 
