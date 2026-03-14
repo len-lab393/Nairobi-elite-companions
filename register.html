@@ -1,53 +1,79 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 <title>Register</title>
 </head>
 
 <body>
 
-<h2>Create Account</h2>
+<h2>Create Escort Account</h2>
 
 <input id="name" placeholder="Name"><br><br>
-<input id="email" placeholder="Email"><br><br>
+
+<input id="email" type="email" placeholder="Email"><br><br>
+
 <input id="phone" placeholder="Phone Number"><br><br>
+
 <input id="city" placeholder="City"><br><br>
+
 <input id="age" type="number" placeholder="Age"><br><br>
+
 <input id="password" type="password" placeholder="Password"><br><br>
 
-<select id="role">
-<option value="escort">Escort (requires payment)</option>
-</select>
-
-<br><br>
 <button onclick="register()">Register</button>
+
+<p>Already have an account? <a href="login.html">Login</a></p>
 
 <script>
 
 function register(){
 
-const user = {
-name: document.getElementById("name").value,
-email: document.getElementById("email").value,
-phone: document.getElementById("phone").value,
-city: document.getElementById("city").value,
-age: document.getElementById("age").value,
-password: document.getElementById("password").value,
-role: document.getElementById("role").value,
-plan: null,
-active: false,
-expiresAt: null
+const name = document.getElementById("name").value;
+const email = document.getElementById("email").value;
+const phone = document.getElementById("phone").value;
+const city = document.getElementById("city").value;
+const age = document.getElementById("age").value;
+const password = document.getElementById("password").value;
+
+if(!name || !email || !phone || !city || !age || !password){
+alert("Fill all fields");
+return;
+}
+
+let users = JSON.parse(localStorage.getItem("users")) || [];
+
+const exists = users.find(u => u.email === email);
+
+if(exists){
+alert("Account already exists");
+return;
+}
+
+const newUser = {
+name:name,
+email:email,
+phone:phone,
+city:city,
+age:age,
+password:password,
+plan:null,
+active:false,
+photos:[]
 };
 
-localStorage.setItem("user", JSON.stringify(user));
+users.push(newUser);
 
-alert("Account created. Subscribe to publish.");
+localStorage.setItem("users", JSON.stringify(users));
 
-window.location.href = "pay.html";
+alert("Account created");
+
+window.location.href = "login.html";
 
 }
 
 </script>
 
 </body>
+
 </html>
