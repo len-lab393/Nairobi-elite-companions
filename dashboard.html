@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Escort Dashboard</title>
+<title>Dashboard</title>
 </head>
 
 <body>
@@ -10,75 +11,30 @@
 
 <div id="profile"></div>
 
-<h3>Edit Profile</h3>
-
-<input id="name" placeholder="Name"><br><br>
-<input id="phone" placeholder="Phone"><br><br>
-<input id="city" placeholder="City"><br><br>
-<input id="age" type="number" placeholder="Age"><br><br>
-
-<h3>Upload Photos (2 required)</h3>
-
-<input type="file" id="photo1"><br><br>
-<input type="file" id="photo2"><br><br>
-
-<h3>Optional Video</h3>
-
-<input type="file" id="video"><br><br>
-
-<button onclick="saveProfile()">Save Profile</button>
-
 <script>
 
-const user = JSON.parse(localStorage.getItem("user"));
+let user = JSON.parse(localStorage.getItem("currentUser"))
 
 if(!user){
-alert("Please login first");
-window.location.href="login.html";
-}
 
-document.getElementById("profile").innerHTML = `
-<p><b>Name:</b> ${user.name}</p>
-<p><b>Email:</b> ${user.email}</p>
-<p><b>City:</b> ${user.city}</p>
-<p><b>Subscription:</b> ${user.plan || "Not subscribed"}</p>
-`;
+alert("Login first")
 
-document.getElementById("name").value = user.name || "";
-document.getElementById("phone").value = user.phone || "";
-document.getElementById("city").value = user.city || "";
-document.getElementById("age").value = user.age || "";
-
-function saveProfile(){
-
-const photo1 = document.getElementById("photo1").files[0];
-const photo2 = document.getElementById("photo2").files[0];
-const video = document.getElementById("video").files[0];
-
-if(!photo1 || !photo2){
-alert("You must upload 2 photos");
-return;
-}
-
-user.name = document.getElementById("name").value;
-user.phone = document.getElementById("phone").value;
-user.city = document.getElementById("city").value;
-user.age = document.getElementById("age").value;
-
-user.photo1 = URL.createObjectURL(photo1);
-user.photo2 = URL.createObjectURL(photo2);
-
-if(video){
-user.video = URL.createObjectURL(video);
-}
-
-localStorage.setItem("user", JSON.stringify(user));
-
-alert("Profile saved");
+window.location.href="login.html"
 
 }
+
+document.getElementById("profile").innerHTML=`
+
+<h3>${user.name}</h3>
+
+<p>${user.city}</p>
+
+<p>${user.phone}</p>
+
+`
 
 </script>
 
 </body>
+
 </html>
