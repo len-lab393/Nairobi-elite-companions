@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 <title>Login</title>
 </head>
 
 <body>
 
-<h2>Login</h2>
+<h2>Escort Login</h2>
 
-<input type="email" id="email" placeholder="Email"><br><br>
-<input type="password" id="password" placeholder="Password"><br><br>
+<input id="email" type="email" placeholder="Email"><br><br>
+
+<input id="password" type="password" placeholder="Password"><br><br>
 
 <button onclick="login()">Login</button>
 
@@ -17,22 +19,21 @@
 
 <script>
 
-function login() {
-
-const savedUser = JSON.parse(localStorage.getItem("user"));
+function login(){
 
 const email = document.getElementById("email").value;
 const password = document.getElementById("password").value;
 
-if (!savedUser){
-alert("No account found");
+let users = JSON.parse(localStorage.getItem("users")) || [];
+
+const user = users.find(u => u.email === email && u.password === password);
+
+if(!user){
+alert("Wrong email or password");
 return;
 }
 
-if (savedUser.email !== email || savedUser.password !== password){
-alert("Wrong login");
-return;
-}
+localStorage.setItem("currentUser", JSON.stringify(user));
 
 alert("Login successful");
 
@@ -43,4 +44,5 @@ window.location.href = "dashboard.html";
 </script>
 
 </body>
+
 </html>
