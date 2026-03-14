@@ -2,137 +2,228 @@
 
 <html>
 <head>
-<title>Escort Platform</title>
+
+<title>Nairobi Elites</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+background:#fafafa;
+}
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px;
+background:white;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
+color:#ff007a;
+}
+
+.joinBtn{
+background:#ff007a;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:20px;
+cursor:pointer;
+}
+
+.escorts{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+padding:15px;
+}
+
+.card{
+background:white;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+.card img{
+width:100%;
+height:200px;
+object-fit:cover;
+}
+
+.card h3{
+margin:10px;
+font-size:16px;
+}
+
+.banner{
+text-align:center;
+padding:30px;
+background:#fff0f7;
+}
+
+.banner button{
+background:#ff007a;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:25px;
+}
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+justify-content:center;
+align-items:center;
+}
+
+.modalContent{
+background:white;
+padding:20px;
+border-radius:10px;
+width:90%;
+max-width:400px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-bottom:10px;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h2>Register</h2>
+<header>
+
+<div class="logo">Nairobi Elites</div>
+
+<button class="joinBtn" onclick="openModal()">Join / Login</button>
+
+</header>
+
+<section class="escorts" id="escortList">
+
+<!-- escorts will load here -->
+
+</section>
+
+<div class="banner">
+
+<h2>Join Nairobi Elites</h2>
+
+<p>Get clients by publishing your escort profile</p>
+
+<button onclick="openModal()">Create Profile</button>
+
+</div>
+
+<div class="modal" id="modal">
+
+<div class="modalContent">
+
+<h3>Register</h3>
+
 <input id="regUsername" placeholder="Username">
 <input id="regEmail" placeholder="Email">
 <input id="regPassword" type="password" placeholder="Password">
+
 <button onclick="register()">Register</button>
 
 <hr>
 
-<h2>Login</h2>
+<h3>Login</h3>
+
 <input id="loginUsername" placeholder="Username">
 <input id="loginPassword" type="password" placeholder="Password">
+
 <button onclick="login()">Login</button>
 
-<hr>
+</div>
 
-<h2>Your Profile</h2>
-<pre id="profile"></pre>
-
-<hr>
-
-<h3>Update Profile</h3>
-
-<input id="updateEmail" placeholder="New Email"><br><br>
-
-Photos: <input type="file" id="updatePhotos" multiple accept="image/*"><br><br>
-
-Video: <input type="file" id="updateVideo" accept="video/*"><br><br>
-
-<button onclick="updateProfile()">Upload Photos / Video</button>
+</div>
 
 <script>
 
-let token = ""
-const API = "https://backend-production-6cd4.up.railway.app/api/escorts"
+const API="https://backend-production-6cd4.up.railway.app/api/escorts"
+
+function openModal(){
+document.getElementById("modal").style.display="flex"
+}
+
+let token=""
 
 async function register(){
 
-const username = document.getElementById("regUsername").value
-const email = document.getElementById("regEmail").value
-const password = document.getElementById("regPassword").value
+const username=document.getElementById("regUsername").value
+const email=document.getElementById("regEmail").value
+const password=document.getElementById("regPassword").value
 
-const res = await fetch(API + "/register",{
+const res=await fetch(API+"/register",{
+
 method:"POST",
 headers:{ "Content-Type":"application/json"},
-body: JSON.stringify({username,email,password})
+
+body:JSON.stringify({username,email,password})
+
 })
 
-const data = await res.json()
+const data=await res.json()
+
 alert(data.message || data.error)
 
 }
 
 async function login(){
 
-const username = document.getElementById("loginUsername").value
-const password = document.getElementById("loginPassword").value
+const username=document.getElementById("loginUsername").value
+const password=document.getElementById("loginPassword").value
 
-const res = await fetch(API + "/login",{
+const res=await fetch(API+"/login",{
+
 method:"POST",
 headers:{ "Content-Type":"application/json"},
-body: JSON.stringify({username,password})
+
+body:JSON.stringify({username,password})
+
 })
 
-const data = await res.json()
+const data=await res.json()
 
 if(data.token){
-token = data.token
-alert("Login successful")
-fetchProfile()
-}else{
+
+token=data.token
+
+alert("Login success")
+
+}
+
+else{
+
 alert(data.error)
-}
 
 }
-
-async function fetchProfile(){
-
-const res = await fetch(API + "/me",{
-headers:{
-Authorization: "Bearer " + token
-}
-})
-
-const data = await res.json()
-
-document.getElementById("profile").innerText =
-JSON.stringify(data,null,2)
-
-}
-
-async function updateProfile(){
-
-const email = document.getElementById("updateEmail").value
-const photos = document.getElementById("updatePhotos").files
-const video = document.getElementById("updateVideo").files[0]
-
-const form = new FormData()
-
-if(email) form.append("email",email)
-
-for(let i=0;i<photos.length;i++){
-form.append("photos",photos[i])
-}
-
-if(video){
-form.append("video",video)
-}
-
-const res = await fetch(API + "/me",{
-method:"PUT",
-headers:{
-Authorization: "Bearer " + token
-},
-body: form
-})
-
-const data = await res.json()
-
-alert("Profile updated")
-document.getElementById("profile").innerText =
-JSON.stringify(data,null,2)
 
 }
 
 </script>
 
 </body>
+
 </html>
