@@ -16,20 +16,30 @@
 <p>No account? <a href="register.html">Register</a></p>
 
 <script>
+
 function login() {
-  const savedUser = JSON.parse(localStorage.getItem("user"));
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+const savedUser = JSON.parse(localStorage.getItem("user"));
 
-  if (!savedUser || savedUser.email !== email || savedUser.password !== password) {
-    alert("Wrong login");
-    return;
-  }
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
 
-  alert("Login successful");
-  window.location.href = "dashboard.html";
+if (!savedUser){
+alert("No account found");
+return;
 }
+
+if (savedUser.email !== email || savedUser.password !== password){
+alert("Wrong login");
+return;
+}
+
+alert("Login successful");
+
+window.location.href = "dashboard.html";
+
+}
+
 </script>
 
 </body>
