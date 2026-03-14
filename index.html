@@ -3,17 +3,14 @@
 
 <head>
 <title>Nairobi Elites</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="stylesheet" href="style.css">
 
 <style>
 
 body{
 font-family:Arial;
-margin:0;
 background:#111;
 color:white;
+margin:0;
 }
 
 header{
@@ -21,29 +18,13 @@ background:black;
 padding:15px;
 display:flex;
 justify-content:space-between;
-align-items:center;
 }
 
-.logo{
-font-size:22px;
-font-weight:bold;
-color:gold;
-}
-
-.nav-buttons button{
-margin-left:10px;
+button{
 padding:8px 14px;
 border:none;
 background:gold;
-color:black;
-font-weight:bold;
 cursor:pointer;
-}
-
-.hero{
-padding:40px;
-text-align:center;
-background:#1a1a1a;
 }
 
 .escorts{
@@ -56,28 +37,8 @@ padding:20px;
 .card{
 background:#1a1a1a;
 padding:10px;
-border-radius:8px;
-text-align:center;
-}
-
-.card img{
-width:100%;
 border-radius:6px;
-}
-
-.card button{
-margin-top:10px;
-padding:6px 10px;
-background:gold;
-border:none;
-cursor:pointer;
-}
-
-footer{
 text-align:center;
-padding:20px;
-background:black;
-margin-top:20px;
 }
 
 </style>
@@ -88,81 +49,63 @@ margin-top:20px;
 
 <header>
 
-<div class="logo">Nairobi Elites</div>
+<h2>Nairobi Elites</h2>
 
-<div class="nav-buttons">
+<div>
 
-<button onclick="goRegister()">Register</button>
+<button onclick="window.location.href='register.html'">Register</button>
 
-<button onclick="goLogin()">Login</button>
+<button onclick="window.location.href='login.html'">Login</button>
 
 </div>
 
 </header>
 
 
-<section class="hero">
+<h3 style="padding-left:20px">Available Escorts</h3>
 
-<h1>Nairobi Escort Directory</h1>
-
-<p>Find verified escorts in Nairobi</p>
-
-</section>
-
-
-<section class="escorts" id="escortList">
-
-<div class="card">
-
-<img src="https://via.placeholder.com/200">
-
-<h3>Sophia</h3>
-
-<p>Nairobi</p>
-
-<button onclick="window.location.href='sophia.html'">View</button>
-
-</div>
-
-
-<div class="card">
-
-<img src="https://via.placeholder.com/200">
-
-<h3>Maya</h3>
-
-<p>Nairobi</p>
-
-<button onclick="window.location.href='maya.html'">View</button>
-
-</div>
-
-</section>
-
-
-<footer>
-
-<p>© Nairobi Elites</p>
-
-</footer>
+<div class="escorts" id="escortList"></div>
 
 
 <script>
 
-function goRegister(){
+function loadEscorts(){
 
-window.location.href="register.html"
+let users = JSON.parse(localStorage.getItem("users")) || []
+
+let container = document.getElementById("escortList")
+
+container.innerHTML=""
+
+users.forEach(user=>{
+
+if(user.active){
+
+container.innerHTML+=`
+
+<div class="card">
+
+<img src="https://via.placeholder.com/200">
+
+<h3>${user.name}</h3>
+
+<p>${user.city}</p>
+
+<p>${user.phone}</p>
+
+</div>
+
+`
 
 }
 
-function goLogin(){
-
-window.location.href="login.html"
+})
 
 }
+
+loadEscorts()
 
 </script>
-
 
 </body>
 
