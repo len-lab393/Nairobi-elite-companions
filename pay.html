@@ -1,63 +1,47 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Buy Membership</title>
+<title>Subscribe</title>
 </head>
 
 <body>
 
 <h2>Escort Subscription</h2>
 
-<button onclick="subscribe('2days',150)">KSh 150 / 2 days</button>
-<br><br>
-
-<button onclick="subscribe('week',400)">KSh 400 / week</button>
-<br><br>
-
-<button onclick="subscribe('month',1200)">KSh 1200 / month</button>
+<button onclick="subscribe()">Activate Subscription</button>
 
 <script>
 
-async function subscribe(plan, amount){
+function subscribe(){
 
-let user = JSON.parse(localStorage.getItem("user"))
+let users = JSON.parse(localStorage.getItem("users")) || []
 
-if(!user){
-alert("Please register first")
-return
-}
+let currentUser = JSON.parse(localStorage.getItem("currentUser"))
 
-try{
+users = users.map(u=>{
 
-const response = await fetch("https://backend-production-6cd4.up.railway.app/api/mpesa/stkpush",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-phone:user.phone,
-amount:amount,
-plan:plan
-})
-})
+if(u.email===currentUser.email){
 
-const data = await response.json()
-
-console.log(data)
-
-alert("Check your phone and enter your M-Pesa PIN")
-
-}catch(error){
-
-console.error(error)
-
-alert("Payment request failed")
+u.active=true
+u.plan="paid"
 
 }
+
+return u
+
+})
+
+localStorage.setItem("users",JSON.stringify(users))
+
+alert("Subscription activated")
+
+window.location.href="dashboard.html"
 
 }
 
 </script>
 
 </body>
+
 </html>
