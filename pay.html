@@ -1,25 +1,29 @@
 <!DOCTYPE html>
+
 <html>
 <head>
 <title>Escort Subscription</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 
 body{
-font-family:Arial;
-background:#111;
-color:white;
+font-family: Arial;
 text-align:center;
-padding-top:40px;
+padding:40px;
+}
+
+input{
+padding:10px;
+width:250px;
+margin-bottom:20px;
 }
 
 button{
 padding:12px 20px;
 margin:10px;
-background:gold;
-border:none;
 cursor:pointer;
-font-weight:bold;
+font-size:16px;
 }
 
 </style>
@@ -28,37 +32,35 @@ font-weight:bold;
 
 <body>
 
-<h2>Escort Subscription</h2>
+<h2>Buy Escort Membership</h2>
 
-<p>Select a plan to publish your profile</p>
+<input id="phone" placeholder="Enter Phone (07XXXXXXXX)" />
 
-<button onclick="subscribe('2days',150)">KSh 150 / 2 days</button>
+<br>
 
-<button onclick="subscribe('week',400)">KSh 400 / week</button>
+<button onclick="subscribe('2days',150)">KSh 150 / 2 Days</button>
 
-<button onclick="subscribe('month',1200)">KSh 1200 / month</button>
+<button onclick="subscribe('week',500)">KSh 500 / 1 Week</button>
 
-<br><br>
-
-<input id="phone" placeholder="Mpesa Phone (07XXXXXXXX)">
+<button onclick="subscribe('month',1500)">KSh 1500 / 1 Month</button>
 
 <script>
 
-async function subscribe(plan,amount){
+async function subscribe(plan, amount){
 
-const phone=document.getElementById("phone").value
+const phone = document.getElementById("phone").value
 
 if(!phone){
 
-alert("Enter Mpesa phone number")
+alert("Enter phone number")
 
 return
 
 }
 
-let currentUser=JSON.parse(localStorage.getItem("currentUser"))
+try{
 
-const res=await fetch("https://backend-production-6cd4.up.railway.app/api/mpesa",{
+const response = await fetch("https://backend-production-6cd4.up.railway.app/mpesa/stkpush",{
 
 method:"POST",
 
@@ -67,24 +69,30 @@ headers:{
 },
 
 body:JSON.stringify({
-
 phone:phone,
 amount:amount,
-plan:plan,
-email:currentUser.email
-
+plan:plan
 })
 
 })
 
-const data=await res.json()
+const data = await response.json()
 
-alert("Payment request sent. Complete payment on your phone.")
+console.log(data)
+
+alert("STK Push Sent. Check your phone.")
+
+}catch(err){
+
+console.log(err)
+
+alert("Payment request failed")
+
+}
 
 }
 
 </script>
 
 </body>
-
 </html>
