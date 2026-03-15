@@ -36,17 +36,13 @@ cursor:pointer;
 
 <br>
 
-<button onclick="subscribe('2days',150)">KSh 150 / 2 Days</button>
-
-<button onclick="subscribe('week',400)">KSh 400 / 1 Week</button>
-
-<button onclick="subscribe('month',1200)">KSh 1200 / 1 Month</button>
+<button onclick="subscribe('2days',150)">KSh 150 / 2 Days</button> <button onclick="subscribe('week',400)">KSh 400 / 1 Week</button> <button onclick="subscribe('month',1200)">KSh 1200 / 1 Month</button>
 
 <script>
 
 async function subscribe(plan,amount){
 
-const phone=document.getElementById("phone").value
+const phone=document.getElementById("phone").value.trim()
 
 if(!phone){
 alert("Enter phone number")
@@ -55,9 +51,7 @@ return
 
 try{
 
-const response=await fetch(
-"https://backend-production-6cd4.up.railway.app/mpesa/stkpush",
-{
+const res = await fetch("https://backend-production-6cd4.up.railway.app/mpesa/stkpush",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
@@ -67,20 +61,22 @@ phone:phone,
 amount:amount,
 plan:plan
 })
+})
+
+const text = await res.text()
+console.log("SERVER RESPONSE:",text)
+
+if(!res.ok){
+alert("Server error. Check console.")
+return
 }
-)
 
-const data=await response.json()
-
-console.log(data)
-
-alert("STK Push sent. Check phone.")
+alert("STK push sent. Check your phone.")
 
 }catch(err){
 
-console.log(err)
-
-alert("Payment request failed")
+console.error("FETCH ERROR:",err)
+alert("Network or frontend error. Check console.")
 
 }
 
