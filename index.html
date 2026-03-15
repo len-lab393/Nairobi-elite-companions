@@ -22,8 +22,8 @@ justify-content:space-between;
 
 button{
 padding:8px 14px;
-border:none;
 background:gold;
+border:none;
 cursor:pointer;
 }
 
@@ -39,6 +39,10 @@ background:#1a1a1a;
 padding:10px;
 border-radius:6px;
 text-align:center;
+}
+
+.card img{
+width:100%;
 }
 
 </style>
@@ -61,11 +65,9 @@ text-align:center;
 
 </header>
 
-
 <h3 style="padding-left:20px">Available Escorts</h3>
 
 <div class="escorts" id="escortList"></div>
-
 
 <script>
 
@@ -73,7 +75,7 @@ function loadEscorts(){
 
 let users = JSON.parse(localStorage.getItem("users")) || []
 
-let container = document.getElementById("escortList")
+let container=document.getElementById("escortList")
 
 container.innerHTML=""
 
@@ -85,7 +87,7 @@ container.innerHTML+=`
 
 <div class="card">
 
-<img src="${user.photos ? user.photos[0] : 'https://via.placeholder.com/200'}">
+<img src="${user.photo1 || 'https://via.placeholder.com/200'}">
 
 <h3>${user.name}</h3>
 
