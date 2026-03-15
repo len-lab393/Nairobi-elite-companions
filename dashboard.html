@@ -1,8 +1,32 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-<title>Dashboard</title>
+<title>Escort Dashboard</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f5f5f5;
+padding:20px;
+}
+
+button{
+padding:10px;
+margin-top:10px;
+background:black;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+img{
+width:150px;
+margin:5px;
+}
+
+</style>
+
 </head>
 
 <body>
@@ -11,30 +35,89 @@
 
 <div id="profile"></div>
 
+<h3>Edit Profile</h3>
+
+<input id="name" placeholder="Name"><br><br>
+<input id="city" placeholder="City"><br><br>
+<input id="phone" placeholder="Phone"><br><br>
+
+<h3>Upload Photos</h3>
+
+<input type="file" id="photo1"><br><br>
+<input type="file" id="photo2"><br><br>
+
+<button onclick="saveProfile()">Save Profile</button>
+
+<div id="subscribeBox"></div>
+
 <script>
 
-let user = JSON.parse(localStorage.getItem("currentUser"))
+let users = JSON.parse(localStorage.getItem("users")) || []
+let currentUser = JSON.parse(localStorage.getItem("currentUser"))
 
-if(!user){
+if(!currentUser){
 
 alert("Login first")
-
 window.location.href="login.html"
 
 }
 
+let user = users.find(u=>u.email===currentUser.email)
+
 document.getElementById("profile").innerHTML=`
 
-<h3>${user.name}</h3>
-
-<p>${user.city}</p>
-
-<p>${user.phone}</p>
+<p><b>Name:</b> ${user.name}</p>
+<p><b>City:</b> ${user.city}</p>
+<p><b>Phone:</b> ${user.phone}</p>
 
 `
+
+document.getElementById("name").value=user.name
+document.getElementById("city").value=user.city
+document.getElementById("phone").value=user.phone
+
+if(!user.active){
+
+document.getElementById("subscribeBox").innerHTML=`
+
+<h3>Subscription Required</h3>
+
+<button onclick="window.location.href='pay.html'">
+Subscribe To Publish Profile
+</button>
+
+`
+
+}
+
+function saveProfile(){
+
+const photo1=document.getElementById("photo1").files[0]
+const photo2=document.getElementById("photo2").files[0]
+
+user.name=document.getElementById("name").value
+user.city=document.getElementById("city").value
+user.phone=document.getElementById("phone").value
+
+if(photo1){
+
+user.photo1=URL.createObjectURL(photo1)
+
+}
+
+if(photo2){
+
+user.photo2=URL.createObjectURL(photo2)
+
+}
+
+localStorage.setItem("users",JSON.stringify(users))
+
+alert("Profile updated")
+
+}
 
 </script>
 
 </body>
-
 </html>
