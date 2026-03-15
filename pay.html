@@ -1,42 +1,85 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-<title>Subscribe</title>
+<title>Escort Subscription</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#111;
+color:white;
+text-align:center;
+padding-top:40px;
+}
+
+button{
+padding:12px 20px;
+margin:10px;
+background:gold;
+border:none;
+cursor:pointer;
+font-weight:bold;
+}
+
+</style>
+
 </head>
 
 <body>
 
 <h2>Escort Subscription</h2>
 
-<button onclick="subscribe()">Activate Subscription</button>
+<p>Select a plan to publish your profile</p>
+
+<button onclick="subscribe('2days',150)">KSh 150 / 2 days</button>
+
+<button onclick="subscribe('week',400)">KSh 400 / week</button>
+
+<button onclick="subscribe('month',1200)">KSh 1200 / month</button>
+
+<br><br>
+
+<input id="phone" placeholder="Mpesa Phone (07XXXXXXXX)">
 
 <script>
 
-function subscribe(){
+async function subscribe(plan,amount){
 
-let users = JSON.parse(localStorage.getItem("users")) || []
+const phone=document.getElementById("phone").value
 
-let currentUser = JSON.parse(localStorage.getItem("currentUser"))
+if(!phone){
 
-users = users.map(u=>{
+alert("Enter Mpesa phone number")
 
-if(u.email===currentUser.email){
-
-u.active=true
-u.plan="paid"
+return
 
 }
 
-return u
+let currentUser=JSON.parse(localStorage.getItem("currentUser"))
+
+const res=await fetch("https://backend-production-6cd4.up.railway.app/api/mpesa",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+phone:phone,
+amount:amount,
+plan:plan,
+email:currentUser.email
 
 })
 
-localStorage.setItem("users",JSON.stringify(users))
+})
 
-alert("Subscription activated")
+const data=await res.json()
 
-window.location.href="dashboard.html"
+alert("Payment request sent. Complete payment on your phone.")
 
 }
 
