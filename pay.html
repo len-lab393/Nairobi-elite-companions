@@ -1,51 +1,17 @@
-<!DOCTYPE html>
-
-<html>
-<head>
-<title>Escort Subscription</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<style>
-body{
-font-family:Arial;
-text-align:center;
-padding:40px;
-}
-
-input{
-padding:10px;
-width:250px;
-margin-bottom:20px;
-}
-
-button{
-padding:12px 20px;
-margin:10px;
-font-size:16px;
-cursor:pointer;
-}
-</style>
-
-</head>
-
-<body>
-
-<h2>Escort Subscription</h2>
-
-<input id="phone" placeholder="Enter Phone (07XXXXXXXX)">
-
-<br>
-
-<button onclick="subscribe('2days',150)">KSh 150 / 2 Days</button> <button onclick="subscribe('week',400)">KSh 400 / 1 Week</button> <button onclick="subscribe('month',1200)">KSh 1200 / 1 Month</button>
-
 <script>
-
 async function subscribe(plan,amount){
 
-const phone=document.getElementById("phone").value.trim()
+const phone = document.getElementById("phone").value.trim()
+
+const escortId = localStorage.getItem("escortId")
 
 if(!phone){
-alert("Enter phone number")
+alert("Enter phone")
+return
+}
+
+if(!escortId){
+alert("Login first")
 return
 }
 
@@ -59,30 +25,20 @@ headers:{
 body:JSON.stringify({
 phone:phone,
 amount:amount,
-plan:plan
+plan:plan,
+escortId:escortId
 })
 })
 
-const text = await res.text()
-console.log("SERVER RESPONSE:",text)
+const data = await res.json()
+console.log(data)
 
-if(!res.ok){
-alert("Server error. Check console.")
-return
-}
-
-alert("STK push sent. Check your phone.")
+alert("STK sent. Check phone.")
 
 }catch(err){
-
-console.error("FETCH ERROR:",err)
-alert("Network or frontend error. Check console.")
-
+console.error(err)
+alert("Network error")
 }
 
 }
-
-</script>
-
-</body>
-</html>
+  </script>
